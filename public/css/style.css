@@ -1,0 +1,504 @@
+/* ==========================================================================
+   Tipprunde – zentrales Stylesheet
+   Grundlage: docs/styleguide.md, Vertrag aus Kap. 3.7 des 4-Tage-Startplans.
+   Mobile first, Breakpoint ab 768 px. Keine Bibliotheken außer Google Fonts.
+   ========================================================================== */
+
+/* KI-Log #4 – Google Fonts: Barlow Condensed (Überschriften), Inter (Fließtext) */
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap");
+
+/* ---------- 1. Design-Tokens ---------- */
+/* KI-Log #4 – Variablen laut Styleguide */
+:root {
+    /* Farben */
+    --color-bg: #13213C;
+    --color-surface: #23325B;
+    --color-surface-hover: #2C3D6B;
+    --color-accent: #F26B35;
+    --color-accent-hover: #D9592A;
+    --color-text: #FFFFFF;
+    --color-text-muted: #A9B4CC;
+    --color-border: #3D485D;
+    --color-success: #8FB57A;
+    --color-danger: #E5484D;
+    --color-warning: #F2C14E;
+
+    /* Schriften */
+    --font-heading: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+    --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-h1: 2rem;
+    --font-size-h2: 1.5rem;
+    --font-size-h3: 1.25rem;
+
+    /* Abstände (4er-Raster) */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+
+    /* Radius und Schatten */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-pill: 999px;
+    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.25);
+    --shadow-focus: 0 0 0 3px rgba(242, 107, 53, 0.45);
+
+    /* Layout */
+    --container-max: 1100px;
+    --header-height: 56px;
+}
+
+/* ---------- 2. Reset ---------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body,
+h1, h2, h3, h4,
+p,
+ul, ol,
+figure {
+    margin: 0;
+    padding: 0;
+}
+
+img,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+select,
+textarea {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* ---------- 3. Typografie ---------- */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+}
+
+h1 { font-size: var(--font-size-h1); }
+h2 { font-size: var(--font-size-h2); }
+h3 { font-size: var(--font-size-h3); }
+
+p + p {
+    margin-top: var(--space-3);
+}
+
+a {
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+}
+
+.text-muted {
+    color: var(--color-text-muted);
+}
+
+/* ---------- 4. Layout ---------- */
+/* KI-Log #4 – Container, Header und Footer */
+.container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+}
+
+main {
+    flex: 1;
+    padding: var(--space-5) 0;
+}
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.site-header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: var(--header-height);
+}
+
+.site-header .logo img {
+    height: 32px;
+    width: auto;
+}
+
+.site-header nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    font-size: var(--font-size-sm);
+}
+
+.site-header nav a {
+    color: var(--color-text-muted);
+}
+
+.site-header nav a:hover,
+.site-header nav a.active {
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.site-footer {
+    padding: var(--space-5) 0;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+.site-footer .container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.site-footer a {
+    color: var(--color-text-muted);
+}
+
+/* ---------- 5. Karten ---------- */
+.card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: var(--space-4);
+}
+
+.card + .card {
+    margin-top: var(--space-4);
+}
+
+.card h2,
+.card h3 {
+    margin-bottom: var(--space-3);
+}
+
+/* ---------- 6. Buttons ---------- */
+/* KI-Log #4 – Button-Varianten */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: 44px;
+    padding: var(--space-2) var(--space-5);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    background: transparent;
+    font-family: var(--font-heading);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:hover {
+    text-decoration: none;
+}
+
+.btn:disabled,
+.btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background-color: var(--color-accent);
+    color: var(--color-text);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--color-accent-hover);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border-color: var(--color-border);
+    color: var(--color-text);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: var(--color-surface-hover);
+    border-color: var(--color-text-muted);
+}
+
+.btn-block {
+    display: flex;
+    width: 100%;
+}
+
+/* ---------- 7. Formulare ---------- */
+/* KI-Log #4 – Formularelemente */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin-bottom: var(--space-4);
+}
+
+.label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.input {
+    width: 100%;
+    min-height: 44px;
+    padding: var(--space-2) var(--space-3);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+}
+
+.input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.7;
+}
+
+.input:focus {
+    border-color: var(--color-accent);
+}
+
+.input.is-invalid {
+    border-color: var(--color-danger);
+}
+
+/* Kleine Zahlenfelder für Tipps, z. B. 2 : 1 */
+.input-score {
+    width: 3.5rem;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+}
+
+.form-hint,
+.form-error {
+    font-size: var(--font-size-sm);
+}
+
+.form-hint {
+    color: var(--color-text-muted);
+}
+
+.form-error {
+    color: var(--color-danger);
+}
+
+/* ---------- 8. Meldungen ---------- */
+.alert {
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-left-width: 4px;
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+}
+
+.alert-error {
+    border-color: var(--color-danger);
+    background-color: rgba(229, 72, 77, 0.12);
+}
+
+.alert-success {
+    border-color: var(--color-success);
+    background-color: rgba(143, 181, 122, 0.12);
+}
+
+/* Leere Meldungsboxen nicht anzeigen (api.js füllt sie bei Bedarf) */
+.alert:empty {
+    display: none;
+}
+
+/* ---------- 9. Badges ---------- */
+.badge {
+    display: inline-block;
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-border);
+    color: var(--color-text);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+.badge-success {
+    background-color: var(--color-success);
+    color: var(--color-bg);
+}
+
+.badge-warning {
+    background-color: var(--color-warning);
+    color: var(--color-bg);
+}
+
+.badge-locked {
+    background-color: transparent;
+    border: 1px solid var(--color-text-muted);
+    color: var(--color-text-muted);
+}
+
+/* ---------- 10. Tabs ---------- */
+.tabs {
+    display: flex;
+    gap: var(--space-1);
+    overflow-x: auto;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-4);
+}
+
+.tab {
+    flex: 0 0 auto;
+    padding: var(--space-2) var(--space-4);
+    border: none;
+    border-bottom: 3px solid transparent;
+    background: transparent;
+    color: var(--color-text-muted);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.tab:hover {
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.tab-active {
+    color: var(--color-text);
+    border-bottom-color: var(--color-accent);
+}
+
+/* ---------- 11. Ladehinweis ---------- */
+/* KI-Log #4 – #loading-indicator: standardmäßig versteckt, api.js blendet ihn
+   nach 800 ms ein (jQuery .show() oder Klasse .is-visible) */
+#loading-indicator {
+    display: none;
+    position: fixed;
+    right: var(--space-4);
+    bottom: var(--space-4);
+    z-index: 100;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-card);
+    font-size: var(--font-size-sm);
+}
+
+#loading-indicator.is-visible {
+    display: flex;
+}
+
+#loading-indicator::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ---------- 12. Desktop ab 768 px ---------- */
+/* KI-Log #4 – Media Query */
+@media (min-width: 768px) {
+    :root {
+        --font-size-h1: 2.75rem;
+        --font-size-h2: 2rem;
+        --font-size-h3: 1.5rem;
+    }
+
+    .container {
+        padding: 0 var(--space-6);
+    }
+
+    main {
+        padding: var(--space-7) 0;
+    }
+
+    .card {
+        padding: var(--space-5);
+    }
+
+    .site-header nav {
+        gap: var(--space-5);
+        font-size: var(--font-size-base);
+    }
+
+    .site-footer .container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #loading-indicator::before {
+        animation: none;
+    }
+}
