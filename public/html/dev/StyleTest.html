@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styletest – Tipprunde</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        /* Nur für diese Testseite: Farbfelder des Styleguides */
+        .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--space-3); }
+        .swatch { border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; font-size: var(--font-size-sm); }
+        .swatch span { display: block; height: 48px; }
+        .swatch code { display: block; padding: var(--space-2); }
+        .row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+        section + section { margin-top: var(--space-6); }
+        section > h2 { margin-bottom: var(--space-4); }
+    </style>
+</head>
+<!-- KI-Log #4 – StyleTest: alle Komponenten aus style.css als Vorlage -->
+<body data-root="../../">
+
+<header id="site-header" class="site-header">
+    <div class="container">
+        <a class="logo" href="../../Homepage.html"><img src="../../img/logo.svg" alt="Tipprunde"></a>
+        <nav>
+            <a href="#" class="active">Spieltag</a>
+            <a href="#">Gruppen</a>
+            <a href="#">Rangliste</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+
+        <section>
+            <h1>Styletest</h1>
+            <p class="text-muted">Alle Komponenten aus <code>public/css/style.css</code> auf einer Seite. Im Handy-Modus der Entwicklertools und auf dem Desktop prüfen.</p>
+        </section>
+
+        <section>
+            <h2>Farben</h2>
+            <div class="swatches">
+                <div class="swatch"><span style="background: var(--color-bg)"></span><code>--color-bg</code></div>
+                <div class="swatch"><span style="background: var(--color-surface)"></span><code>--color-surface</code></div>
+                <div class="swatch"><span style="background: var(--color-accent)"></span><code>--color-accent</code></div>
+                <div class="swatch"><span style="background: var(--color-text)"></span><code>--color-text</code></div>
+                <div class="swatch"><span style="background: var(--color-text-muted)"></span><code>--color-text-muted</code></div>
+                <div class="swatch"><span style="background: var(--color-border)"></span><code>--color-border</code></div>
+                <div class="swatch"><span style="background: var(--color-success)"></span><code>--color-success</code></div>
+                <div class="swatch"><span style="background: var(--color-danger)"></span><code>--color-danger</code></div>
+                <div class="swatch"><span style="background: var(--color-warning)"></span><code>--color-warning</code></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Typografie</h2>
+            <div class="card">
+                <h1>Überschrift H1</h1>
+                <h2>Überschrift H2</h2>
+                <h3>Überschrift H3</h3>
+                <p>Fließtext in Inter. Tippe die Ergebnisse des Spieltags, bevor der Anstoß erfolgt. <a href="#">Ein Link</a> im Text.</p>
+                <p class="text-muted">Gedämpfter Text für Hinweise und Nebeninformationen.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Buttons</h2>
+            <div class="row">
+                <button class="btn btn-primary" type="button">Tipp speichern</button>
+                <button class="btn btn-secondary" type="button">Abbrechen</button>
+                <button class="btn btn-primary" type="button" disabled>Gesperrt</button>
+                <a class="btn btn-secondary" href="#">Link als Button</a>
+            </div>
+            <div style="margin-top: var(--space-4); max-width: 360px;">
+                <button class="btn btn-primary btn-block" type="button">Einloggen (btn-block)</button>
+            </div>
+        </section>
+
+        <section>
+            <h2>Formular</h2>
+            <form class="card" style="max-width: 420px;" onsubmit="return false;">
+                <div class="form-group">
+                    <label class="label" for="email">E-Mail</label>
+                    <input class="input" type="email" id="email" placeholder="name@beispiel.de">
+                </div>
+                <div class="form-group">
+                    <label class="label" for="password">Passwort</label>
+                    <input class="input is-invalid" type="password" id="password" value="kurz">
+                    <span class="form-error">Das Passwort muss mindestens 8 Zeichen haben.</span>
+                </div>
+                <div class="form-group">
+                    <label class="label" for="username">Benutzername</label>
+                    <input class="input" type="text" id="username">
+                    <span class="form-hint">3–30 Zeichen: Buchstaben, Ziffern, _ . -</span>
+                </div>
+                <button class="btn btn-primary btn-block" type="submit">Registrieren</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Meldungen</h2>
+            <div class="alert alert-error">E-Mail oder Passwort ist falsch.</div>
+            <div class="alert alert-success">Dein Tipp wurde gespeichert.</div>
+            <div class="alert">Neutrale Meldung ohne Status.</div>
+        </section>
+
+        <section>
+            <h2>Badges</h2>
+            <div class="row">
+                <span class="badge">Standard</span>
+                <span class="badge badge-success">Getippt</span>
+                <span class="badge badge-warning">Offen</span>
+                <span class="badge badge-locked">Gesperrt</span>
+            </div>
+        </section>
+
+        <section>
+            <h2>Tabs</h2>
+            <div class="tabs">
+                <a href="#" class="tab tab-active">Spieltag</a>
+                <a href="#" class="tab">Tipps der Gruppe</a>
+                <a href="#" class="tab">Rangliste</a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Beispiel: Spielkarte</h2>
+            <div class="card">
+                <div class="row" style="justify-content: space-between;">
+                    <span class="text-muted">Sa, 18.10. · 15:30</span>
+                    <span class="badge badge-warning">Offen</span>
+                </div>
+                <div class="row" style="justify-content: center; margin-top: var(--space-3);">
+                    <strong>FC Bayern</strong>
+                    <input class="input input-score" type="number" min="0" max="20" value="2" aria-label="Tore Heim">
+                    <span>:</span>
+                    <input class="input input-score" type="number" min="0" max="20" value="1" aria-label="Tore Gast">
+                    <strong>Dortmund</strong>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Ladehinweis</h2>
+            <button class="btn btn-secondary" type="button"
+                    onclick="document.getElementById('loading-indicator').classList.toggle('is-visible')">
+                Ladehinweis ein/aus
+            </button>
+        </section>
+
+    </div>
+</main>
+
+<div id="loading-indicator" role="status">Lädt …</div>
+
+<footer id="site-footer" class="site-footer">
+    <div class="container">
+        <span>© 2026 Tipprunde · WI25A</span>
+        <span><a href="#">Impressum</a> · <a href="#">Datenschutz</a></span>
+    </div>
+</footer>
+
+</body>
+</html>
