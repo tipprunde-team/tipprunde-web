@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datenschutz – Tipprunde</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<!-- KI-Log #8 - Datenschutzerklaerung (Entwurf, Platzhalter in eckigen Klammern vor Veroeffentlichung pruefen) -->
+<body data-root="../../" data-nav="">
+
+<header id="site-header"></header>
+
+<main id="main" class="container legal">
+    <h1>Datenschutz&shy;erklärung</h1>
+
+    <p class="placeholder">
+        [Entwurf für ein Studienprojekt. Vor einer öffentlichen Freigabe vollständig prüfen.]
+    </p>
+
+    <h2>1. Verantwortlich</h2>
+    <p>
+        <span class="placeholder">[Name, Anschrift, E-Mail wie im Impressum]</span>
+    </p>
+
+    <h2>2. Welche Daten wir verarbeiten</h2>
+    <p>Wenn du ein Konto anlegst und die Tipprunde nutzt, speichern wir:</p>
+    <ul>
+        <li>E-Mail-Adresse und Benutzername</li>
+        <li>dein Passwort, ausschließlich als Hash (wir kennen es im Klartext nicht)</li>
+        <li>deine Tippgruppen, deine Rolle darin und dein Beitrittsdatum</li>
+        <li>deine Tipps und die daraus berechneten Punkte</li>
+        <li>ein Anmelde-Token mit Ablaufzeit, solange du eingeloggt bist</li>
+    </ul>
+    <p>
+        Wir verwenden keine Cookies, kein Tracking und keine Werbung. Das Anmelde-Token liegt im
+        Sitzungsspeicher deines Browsers (sessionStorage) und wird beim Schließen des Tabs gelöscht.
+    </p>
+
+    <h2>3. Zweck und Rechtsgrundlage</h2>
+    <p>
+        Wir verarbeiten die Daten, um dir die Tipprunde bereitzustellen: Konto, Gruppen, Tipps,
+        Punkte und Rangliste (Art. 6 Abs. 1 lit. b DSGVO). Fehlgeschlagene Anmeldeversuche und
+        abgelehnte Zugriffe protokollieren wir ohne Passwörter, um Missbrauch zu erkennen
+        (Art. 6 Abs. 1 lit. f DSGVO).
+    </p>
+
+    <h2>4. Wer die Daten sieht</h2>
+    <p>
+        Mitglieder deiner Tippgruppe sehen deinen Benutzernamen, deine Punkte und deine Tipps,
+        Tipps allerdings erst ab dem Anstoß des jeweiligen Spiels. Deine E-Mail-Adresse sieht niemand.
+    </p>
+
+    <h2>5. Hosting und Datenbank</h2>
+    <p>
+        Die Anwendung läuft bei <span class="placeholder">[Hosting-Anbieter, Sitz]</span>.
+        Die Datenbank wird bei Aiven betrieben, Region <span class="placeholder">[Region prüfen]</span>.
+        Beim Aufruf der Seite verarbeitet der Hosting-Anbieter technisch notwendige Daten wie deine
+        IP-Adresse <span class="placeholder">[Speicherdauer der Server-Logs beim Anbieter prüfen]</span>.
+    </p>
+
+    <h2>6. Externe Inhalte</h2>
+    <p>
+        Vereinswappen werden von Servern von football-data.org geladen. Dabei wird deine IP-Adresse
+        an diesen Anbieter übertragen.
+        <span class="placeholder">[Falls Schriftarten von Google Fonts geladen werden: hier ergänzen oder Schriften lokal einbinden.]</span>
+    </p>
+
+    <h2>7. Speicherdauer</h2>
+    <p>
+        Wir speichern deine Daten, solange dein Konto besteht. Wenn du dein Konto löschst, entfernen wir
+        alle zugehörigen Daten einschließlich deiner Tipps endgültig. Anmelde-Tokens laufen nach
+        <span class="placeholder">[24 Stunden]</span> ab.
+    </p>
+
+    <h2>8. Deine Rechte</h2>
+    <p>
+        Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung,
+        Datenübertragbarkeit und Widerspruch (Art. 15 bis 21 DSGVO). Außerdem kannst du dich bei einer
+        Datenschutz-Aufsichtsbehörde beschweren (Art. 77 DSGVO). Schreib uns dazu an
+        <span class="placeholder">[Projekt-E-Mail-Adresse]</span>.
+    </p>
+
+    <p class="section-note">Stand: <span class="placeholder">[Datum]</span></p>
+</main>
+
+<footer id="site-footer"></footer>
+
+<script src="../../js/jquery-3.6.0.min.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/layout.js"></script>
+<!-- ab Tag 4 (Niklas): <script src="../../js/auth-nav.js"></script> -->
+</body>
+</html>
