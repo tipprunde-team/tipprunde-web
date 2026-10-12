@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<!--
+  KI-Log #8 - Kopiervorlage fuer neue Seiten
+  1. Datei kopieren, z. B. nach html/groups/CreateGroup.html
+  2. data-root anpassen: Weg von der Seite zurueck nach public/
+       public/Seite.html            -> "./"
+       public/html/ordner/Seite.html -> "../../"
+  3. data-nav setzen (aktiver Menuepunkt): "home", "groups" oder leer lassen
+  4. Alle Pfade zu css/ und js/ mit demselben Praefix wie data-root
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seitentitel – Tipprunde</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body data-root="../../" data-nav="">
+
+<header id="site-header"></header>
+
+<main id="main" class="container">
+    <h1>Seitentitel</h1>
+
+    <!-- Fehler- und Erfolgsmeldungen (showError / showSuccess aus api.js) -->
+    <div id="page-alert" class="alert" hidden></div>
+
+    <!-- Inhalt der Seite -->
+
+</main>
+
+<footer id="site-footer"></footer>
+
+<!-- Reihenfolge nicht aendern -->
+<script src="../../js/jquery-3.6.0.min.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/layout.js"></script>
+<!-- ab Tag 4 (Niklas): <script src="../../js/auth-nav.js"></script> -->
+<!-- Seitenskript, z. B.: <script src="../../js/pages/creategroup.js"></script> -->
+<!-- Geschuetzte Seite? Im Seitenskript zuerst requireLogin() aufrufen -->
+</body>
+</html>

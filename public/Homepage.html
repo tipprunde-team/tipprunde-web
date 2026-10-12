@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipprunde – Bundesliga tippen in eurer Gruppe</title>
+    <meta name="description" content="Werbefreie Tipprunde für die 1. Bundesliga: private Gruppe anlegen, Freunde per Code einladen, vor dem Anpfiff tippen.">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<!-- KI-Log #8 - Startseite -->
+<body data-root="./" data-nav="home">
+
+<header id="site-header"></header>
+
+<main id="main" class="container">
+
+    <section class="hero">
+        <div>
+            <h1>Eure Tipprunde für die Bundesliga</h1>
+            <p class="hero-lead">
+                Gruppe anlegen, Freunde per Einladungscode dazuholen und vor jedem Anpfiff tippen.
+                Nach dem Spiel gibt es Punkte, und die Rangliste zeigt, wer am besten liegt.
+            </p>
+            <ul class="hero-facts">
+                <li>Ohne Werbung</li>
+                <li>Private Gruppen</li>
+                <li>Nur 1. Bundesliga</li>
+            </ul>
+            <div class="hero-actions" id="hero-actions">
+                <a class="btn btn-primary" href="./html/auth/Register.html">Registrieren</a>
+                <a class="btn btn-secondary" href="./html/auth/Logon.html">Anmelden</a>
+            </div>
+        </div>
+
+        <!-- Beispielkarten im Stil der Spieltagsseite, nur Deko -->
+        <div class="preview" role="img" aria-label="Beispiel: zwei Spielkarten mit Tipp und Punkten">
+            <div class="match-card match-card--highlight">
+                <div class="match-card__top">
+                    <span>Samstag, 18:30</span>
+                    <span class="badge badge-warning">noch 2 Std 14 Min</span>
+                </div>
+                <div class="match-card__teams">
+                    <div class="team"><span class="team-badge">FCB</span><span>Bayern</span></div>
+                    <div class="match-card__score">– : –</div>
+                    <div class="team team--away"><span>Dortmund</span><span class="team-badge">BVB</span></div>
+                </div>
+                <p class="match-card__tip">Dein Tipp: 2 : 1</p>
+            </div>
+            <div class="match-card">
+                <div class="match-card__top">
+                    <span>Freitag, 20:30</span>
+                    <span class="badge badge-success">+3 Punkte</span>
+                </div>
+                <div class="match-card__teams">
+                    <div class="team"><span class="team-badge">SCF</span><span>Freiburg</span></div>
+                    <div class="match-card__score">0 : 2</div>
+                    <div class="team team--away"><span>Stuttgart</span><span class="team-badge">VFB</span></div>
+                </div>
+                <p class="match-card__tip">Dein Tipp: 1 : 3</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="home-section" aria-labelledby="steps-title">
+        <h2 id="steps-title">So läuft eine Tipprunde</h2>
+        <ol class="steps">
+            <li>
+                <div>
+                    <h3>Gruppe erstellen</h3>
+                    <p>Du legst eine Tippgruppe an und bist automatisch ihr Admin.</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h3>Code teilen</h3>
+                    <p>Schick den Einladungscode an deine Leute. Wer ihn hat, kann beitreten.</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h3>Vor dem Anpfiff tippen</h3>
+                    <p>Tipps lassen sich bis zum Anstoß ändern. Danach sind sie gesperrt und für alle sichtbar.</p>
+                </div>
+            </li>
+        </ol>
+    </section>
+
+    <section class="home-section" aria-labelledby="points-title">
+        <h2 id="points-title">So gibt es Punkte</h2>
+        <table class="points-table">
+            <caption class="section-note">
+                Beispiel für ein Endergebnis von 3 : 1. Gewertet wird das Ergebnis nach 90 Minuten.
+            </caption>
+            <thead>
+                <tr><th scope="col">Dein Tipp</th><th scope="col">Warum</th><th scope="col">Punkte</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>3 : 1</td><td>Ergebnis exakt getroffen</td><td class="points-value">4</td></tr>
+                <tr><td>2 : 0</td><td>Tordifferenz stimmt</td><td class="points-value">3</td></tr>
+                <tr><td>4 : 0</td><td>Sieger stimmt</td><td class="points-value">2</td></tr>
+                <tr><td>1 : 1</td><td>Daneben</td><td class="points-value points-value--zero">0</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+</main>
+
+<footer id="site-footer"></footer>
+
+<script src="./js/jquery-3.6.0.min.js"></script>
+<script src="./js/api.js"></script>
+<script src="./js/auth.js"></script>
+<script src="./js/layout.js"></script>
+<!-- ab Tag 4 (Niklas): <script src="./js/auth-nav.js"></script> -->
+<script>
+    // Eingeloggt: statt Registrieren/Anmelden direkt zu den Tippgruppen
+    $(function () {
+        if (typeof isLoggedIn === 'function' && isLoggedIn()) {
+            $('#hero-actions').html(
+                '<a class="btn btn-primary" href="./html/groups/Groups.html">Zu deinen Tippgruppen</a>'
+            );
+        }
+    });
+</script>
+</body>
+</html>
