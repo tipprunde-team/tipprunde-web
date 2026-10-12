@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API-Test | Tipprunde</title>
+  
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body data-root="../../">
+  <main class="container">
+    <h1>API-Test</h1>
+
+    <div class="card">
+      <p>Backend-URL: <code id="base-url"></code></p>
+      <button type="button" id="ping-button" class="btn btn-primary">Ping senden</button>
+      <div id="result" style="display:none; margin-top: 1rem;"></div>
+      <pre id="raw-response" style="display:none;"></pre>
+    </div>
+  </main>
+
+  <script src="../../js/jquery-3.6.0.min.js"></script>
+  <script src="../../js/api.js"></script>
+  <script src="../../js/auth.js"></script>
+  <script>
+    $('#base-url').text(API_BASE_URL);
+
+    $('#ping-button').on('click', function () {
+      var $button = $(this).prop('disabled', true);
+      $('#raw-response').hide();
+
+      apiRequest('GET', '/ping')
+        .then(function (data) {
+          showSuccess('#result', 'Backend erreichbar.');
+          $('#raw-response').text(JSON.stringify(data, null, 2)).show();
+        })
+        .catch(function (err) {
+          showError('#result', err);
+          $('#raw-response').text(JSON.stringify(err, null, 2)).show();
+        })
+        .then(function () {
+          $button.prop('disabled', false);
+        });
+    });
+  </script>
+</body>
+</html>
