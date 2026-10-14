@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gruppe erstellen (Mockup) – Tipprunde</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body data-root="../../" data-nav="groups" data-mockup="create">
+
+<header id="site-header"></header>
+
+<main id="main" class="container narrow">
+    <div class="mockup-bar">
+        <span>Mockup: Speichern simuliert die Antwort von POST /api/groups</span>
+    </div>
+
+    <h1>Gruppe erstellen</h1>
+    <p class="page-lead">Du wirst automatisch Admin und bekommst einen Einladungscode für deine Mitspieler.</p>
+
+    <div id="page-alert" class="alert" role="alert" hidden></div>
+
+    <div class="card" id="create-card">
+        <form id="create-form" novalidate>
+            <div class="form-group">
+                <label class="label" for="group-name">Name der Tippgruppe</label>
+                <input class="input" type="text" id="group-name" name="name" maxlength="50" autocomplete="off" required>
+                <span class="char-count" id="name-count" aria-live="polite">0 / 50</span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Gruppe erstellen</button>
+        </form>
+    </div>
+
+    <!-- Erfolgsansicht mit Einladungscode; füllt mockups.js -->
+    <div class="card" id="created-card" hidden></div>
+</main>
+
+<footer id="site-footer"></footer>
+
+<script src="../../js/jquery-3.6.0.min.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/layout.js"></script>
+<script src="../../js/pages/mockups.js"></script>
+</body>
+</html>
