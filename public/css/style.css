@@ -4,11 +4,11 @@
    Mobile first, Breakpoint ab 768 px. Keine Bibliotheken außer Google Fonts.
    ========================================================================== */
 
-/* KI-Log #4 – Google Fonts: Barlow Condensed (Überschriften), Inter (Fließtext) */
+/* Google Fonts: Barlow Condensed (Überschriften), Inter (Fließtext) */
 @import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap");
 
 /* ---------- 1. Design-Tokens ---------- */
-/* KI-Log #4 – Variablen laut Styleguide */
+/* Variablen laut Styleguide */
 :root {
     /* Farben */
     --color-bg: #13213C;
@@ -138,7 +138,7 @@ a:hover {
 }
 
 /* ---------- 4. Layout ---------- */
-/* KI-Log #4 – Container, Header und Footer */
+/* Container, Header und Footer */
 .container {
     width: 100%;
     max-width: var(--container-max);
@@ -225,7 +225,7 @@ main {
 }
 
 /* ---------- 6. Buttons ---------- */
-/* KI-Log #4 – Button-Varianten */
+/* Button-Varianten */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -281,7 +281,7 @@ main {
 }
 
 /* ---------- 7. Formulare ---------- */
-/* KI-Log #4 – Formularelemente */
+/* Formularelemente */
 .form-group {
     display: flex;
     flex-direction: column;
@@ -429,7 +429,7 @@ main {
 }
 
 /* ---------- 11. Ladehinweis ---------- */
-/* KI-Log #4 – #loading-indicator: standardmäßig versteckt, api.js blendet ihn
+/* #loading-indicator: standardmäßig versteckt, api.js blendet ihn
    nach 800 ms ein (jQuery .show() oder Klasse .is-visible) */
 #loading-indicator {
     display: none;
@@ -466,7 +466,7 @@ main {
 }
 
 /* ---------- 12. Desktop ab 768 px ---------- */
-/* KI-Log #4 – Media Query */
+/* Media Query */
 @media (min-width: 768px) {
     :root {
         --font-size-h1: 2.75rem;
@@ -502,10 +502,9 @@ main {
         animation: none;
     }
 }
+
 /* ==========================================================
-   KI-Log #8 - Ergaenzung Tag 2: Layout, Startseite, Rechtliches
-   Diesen Block ans ENDE von public/css/style.css kopieren.
-   Nutzt die Variablen aus style.css, Fallbacks nur zur Sicherheit.
+   Ergänzung Tag 2: Layout, Startseite, Rechtliches
    ========================================================== */
 
 /* --- Barrierefreiheit: Sprunglink und Fokus --- */
@@ -698,4 +697,109 @@ main {
     .hero { grid-template-columns: 1.2fr 1fr; padding: 64px 0; }
     .steps { grid-template-columns: repeat(3, 1fr); }
     .steps li { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================
+   Menü-Button und mobile Navigation (Nachtrag Tag 2)
+   Mobile first: Basis = Handy, ab 768 px Desktop.
+   Fokus-Ring kommt vom globalen :focus-visible.
+   ========================================================== */
+
+/* Button: Hamburger-Icon plus Text, Touch-Ziel mind. 44 px */
+.nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 var(--space-3);
+    background: transparent;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+}
+.nav-toggle:hover {
+    background-color: var(--color-surface-hover);
+    border-color: var(--color-text-muted);
+}
+
+/* Drei Striche aus einem Element plus ::before / ::after */
+.nav-toggle__icon,
+.nav-toggle__icon::before,
+.nav-toggle__icon::after {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 1px;
+    background: currentColor;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.nav-toggle__icon { position: relative; }
+.nav-toggle__icon::before,
+.nav-toggle__icon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+}
+.nav-toggle__icon::before { top: -6px; }
+.nav-toggle__icon::after { top: 6px; }
+
+/* Geöffnet: Striche werden zum X */
+.nav-toggle[aria-expanded="true"] .nav-toggle__icon { background: transparent; }
+.nav-toggle[aria-expanded="true"] .nav-toggle__icon::before { transform: translateY(6px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle__icon::after { transform: translateY(-6px) rotate(-45deg); }
+
+/* Handy: Navigation versteckt, nach Klick als eigene Zeile unter dem Header.
+   Zwei Klassen im Selektor, damit ".site-header nav { display: flex }" sicher überschrieben wird. */
+.site-header .main-nav {
+    display: none;
+    order: 3;
+    flex-basis: 100%;
+    flex-direction: column;
+    gap: 0;
+    padding: var(--space-2) 0;
+    border-top: 1px solid var(--color-border);
+}
+.site-header .main-nav.is-open { display: flex; }
+.site-header .main-nav a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 var(--space-3);
+    border-bottom: 0;
+    border-left: 3px solid transparent;
+    border-radius: var(--radius-sm);
+}
+.site-header .main-nav a.active {
+    border-left-color: var(--color-accent);
+    background: var(--color-surface);
+}
+
+/* Ab 768 px: Button weg, Navigation wie bisher in der Zeile */
+@media (min-width: 768px) {
+    .nav-toggle { display: none; }
+    .site-header .main-nav,
+    .site-header .main-nav.is-open {
+        display: flex;
+        order: 0;
+        flex-basis: auto;
+        flex-direction: row;
+        gap: var(--space-5);
+        padding: 0;
+        border-top: 0;
+    }
+    .site-header .main-nav a {
+        min-height: 0;
+        padding: 6px 0;
+        border-left: 0;
+        border-bottom: 2px solid transparent;
+        border-radius: 0;
+        background: none;
+    }
+    .site-header .main-nav a.active {
+        border-bottom-color: var(--color-accent);
+        background: none;
+    }
 }
