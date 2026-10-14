@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anmelden – Tipprunde</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body data-root="../../" data-nav="">
+
+<header id="site-header"></header>
+
+<main id="main" class="container">
+    <h1>Anmelden</h1>
+
+    <!-- Fehlermeldungen (showError aus api.js) -->
+    <div id="page-alert" class="alert" hidden></div>
+
+    <div class="card">
+        <form id="logon-form" novalidate>
+            <div class="form-group">
+                <label class="label" for="email">E-Mail</label>
+                <input class="input" type="email" id="email" name="email" autocomplete="username" required>
+            </div>
+
+            <div class="form-group">
+                <label class="label" for="password">Passwort</label>
+                <input class="input" type="password" id="password" name="password" autocomplete="current-password" required>
+            </div>
+
+            <button type="submit" id="logon-button" class="btn btn-primary btn-block">Anmelden</button>
+        </form>
+
+        <p>Noch kein Konto? <a href="Register.html">Registrieren</a></p>
+    </div>
+</main>
+
+<footer id="site-footer"></footer>
+
+<!-- Reihenfolge nicht ändern -->
+<script src="../../js/jquery-3.6.0.min.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/layout.js"></script>
+<!-- ab Tag 4 (Niklas): <script src="../../js/auth-nav.js"></script> -->
+<script src="../../js/pages/logon.js"></script>
+</body>
+</html>
