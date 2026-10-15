@@ -44,6 +44,10 @@ $(function () {
     goToTarget();
     return;
   }
+  // nach der Registrierung: Hinweis anzeigen
+  if (new URLSearchParams(window.location.search).get('registered') === '1') {
+    showSuccess('#page-alert', 'Konto angelegt, bitte anmelden.');
+  }
 
   $('#logon-form').on('submit', function (event) {
     event.preventDefault();
