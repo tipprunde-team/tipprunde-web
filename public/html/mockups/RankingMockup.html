@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rangliste (Mockup) – Tipprunde</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body data-root="../../" data-nav="groups" data-mockup="ranking">
+
+<header id="site-header"></header>
+
+<main id="main" class="container">
+    <div class="mockup-bar">
+        <span>Mockup mit Beispieldaten aus GET /api/groups/{groupId}/ranking</span>
+    </div>
+
+    <h1 class="sr-only">Rangliste</h1>
+
+    <!-- Bereiche der Tippgruppe -->
+    <nav class="tabs" aria-label="Bereiche der Tippgruppe">
+        <a href="../matchday/Matchday.html" class="tab">Spieltag</a>
+        <a href="#" class="tab tab-active" aria-current="page">Rangliste</a>
+        <a href="#" class="tab" data-soon="Gruppe">Gruppe</a>
+    </nav>
+
+    <div id="page-alert" class="alert" role="status" hidden></div>
+
+    <!-- Umschalter Gesamt / Spieltag -->
+    <div class="segmented" role="group" aria-label="Ansicht der Rangliste">
+        <button type="button" data-mode="total" aria-pressed="true">Gesamt</button>
+        <button type="button" data-mode="matchday" aria-pressed="false">Spieltag</button>
+    </div>
+
+    <p class="ranking-note" id="ranking-note" hidden></p>
+
+    <div class="card ranking-wrap">
+        <table class="ranking-table">
+            <caption class="sr-only" id="ranking-caption">Gesamtrangliste</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Platz</th>
+                    <th scope="col">Name</th>
+                    <th scope="col" class="num">Punkte</th>
+                    <th scope="col" class="num"><abbr title="Exakte Tipps">Exakt</abbr></th>
+                </tr>
+            </thead>
+            <!-- Zeilen füllt mockups.js -->
+            <tbody id="ranking-body"></tbody>
+        </table>
+    </div>
+</main>
+
+<footer id="site-footer"></footer>
+
+<script src="../../js/jquery-3.6.0.min.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/layout.js"></script>
+<script src="../../js/pages/mockups.js"></script>
+</body>
+</html>
