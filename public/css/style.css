@@ -1,6 +1,6 @@
 /* ==========================================================================
    Tipprunde – zentrales Stylesheet
-   Grundlage: docs/styleguide.md, Vertrag aus Kap. 3.7 des 4-Tage-Startplans.
+   Grundlage: docs/styleguide.md.
    Mobile first, Breakpoint ab 768 px. Keine Bibliotheken außer Google Fonts.
    ========================================================================== */
 
@@ -504,7 +504,7 @@ main {
 }
 
 /* ==========================================================
-   Ergänzung Tag 2: Layout, Startseite, Rechtliches
+   Layout, Startseite, Rechtliches
    ========================================================== */
 
 /* --- Barrierefreiheit: Sprunglink und Fokus --- */
@@ -700,7 +700,7 @@ main {
 }
 
 /* ==========================================================
-   Menü-Button und mobile Navigation (Nachtrag Tag 2)
+   Menü-Button und mobile Navigation
    Mobile first: Basis = Handy, ab 768 px Desktop.
    Fokus-Ring kommt vom globalen :focus-visible.
    ========================================================== */
@@ -806,7 +806,7 @@ main {
 
 
 /* ==========================================================
-   Spieltagsseite (Tag 3)
+   Spieltagsseite
    Baut auf .match-card von der Startseite auf. Mobile first.
    ========================================================== */
 
@@ -973,7 +973,7 @@ main {
 }
 
 /* ==========================================================
-   Gruppen und Rangliste (Tag 4, statische Mockups)
+   Gruppen und Rangliste (statische Mockups)
    Mobile first, ab 768 px Desktop.
    ========================================================== */
 
@@ -1208,4 +1208,137 @@ main {
     .group-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .ranking-table th,
     .ranking-table td { padding: var(--space-3) var(--space-4); }
+}
+/* ==========================================================
+   Group page and group tabs
+   New classes for group-nav.js and GroupInfo.html. Mobile first, checked at 375 px.
+   ========================================================== */
+
+/* Group tabs: on phones three equal columns, so all tabs fit at 375 px */
+#group-tabs { overflow-x: visible; }
+#group-tabs .tab {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: var(--space-2) var(--space-1);
+    font-size: var(--font-size-base);
+    text-align: center;
+}
+
+/* Disabled tab (Rangliste until Sprint 3), hint below the label on phones */
+.tab-disabled {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    color: var(--color-text-muted);
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+.tab-disabled:hover { color: var(--color-text-muted); }
+.tab__hint {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-transform: none;
+}
+
+/* Page title below the tabs */
+.group-info__title {
+    margin-bottom: var(--space-4);
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+/* Card heading */
+.card-title {
+    margin-bottom: var(--space-3);
+    font-size: var(--font-size-lg);
+}
+
+/* Invite link (admin only) */
+.invite-link .btn { flex: 1 1 auto; }
+.invite-code-line {
+    margin: var(--space-3) 0 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+.invite-code-inline {
+    color: var(--color-text);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+}
+.invite-status {
+    margin: var(--space-2) 0 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-success);
+}
+.invite-status.is-error { color: var(--color-danger); }
+
+/* Member list */
+.member-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.member {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-2);
+    border-top: 1px solid var(--color-border);
+}
+.member:first-child { border-top: 0; }
+.member.is-me {
+    background-color: var(--color-surface-hover);
+    border-radius: var(--radius-md);
+    box-shadow: inset 3px 0 0 var(--color-accent);
+}
+.member.is-me + .member { border-top-color: transparent; }
+.member__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background-color: var(--color-bg);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+.member.is-me .member__avatar {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent);
+    color: var(--color-text);
+}
+.member__body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+.member__name {
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+.member__meta {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+@media (min-width: 768px) {
+    #group-tabs .tab {
+        flex: 0 0 auto;
+        padding: var(--space-2) var(--space-4);
+        font-size: var(--font-size-lg);
+    }
+    .tab-disabled {
+        flex-direction: row;
+        align-items: baseline;
+        gap: var(--space-2);
+    }
+    .group-info .card { max-width: 48rem; }
+    .invite-link .btn { flex: 0 0 auto; }
+    .member { padding: var(--space-3) var(--space-4); }
 }
