@@ -1,7 +1,24 @@
+// Live-URL des Core-Service, einzige Stelle zum Ändern bei der Server-Anbindung (22.10.)
+var LIVE_API_BASE_URL = 'https://TODO-HEROKU-APP.herokuapp.com/api';
+var LOCAL_API_BASE_URL = 'http://localhost:8080/api';
 
-var API_BASE_URL = 'http://localhost:8080/api';
+// Seiten von diesen Hosts nutzen das lokale Backend ('' steht für file://)
+var LOCAL_HOSTNAMES = ['localhost', '127.0.0.1', '[::1]', ''];
 
-var API_LOADING_DELAY_MS = 800;   
+function isLocalEnvironment() {
+  return LOCAL_HOSTNAMES.indexOf(window.location.hostname) !== -1;
+}
+
+var API_BASE_URL = isLocalEnvironment() ? LOCAL_API_BASE_URL : LIVE_API_BASE_URL;
+
+// In der Konsole sieht man, welches Backend gerade benutzt wird
+console.info('[api] Environment: ' + (isLocalEnvironment() ? 'local' : 'live') +
+  ', API base URL: ' + API_BASE_URL);
+if (API_BASE_URL.indexOf('TODO-') !== -1) {
+  console.warn('[api] Live API URL is still a placeholder. Set LIVE_API_BASE_URL in api.js.');
+}
+
+var API_LOADING_DELAY_MS = 800;
 var API_TIMEOUT_MS = 15000;
 
 var MSG_NETWORK = 'Der Server ist nicht erreichbar. Bitte prüfe deine Verbindung und versuche es später noch einmal.';
