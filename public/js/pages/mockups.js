@@ -1,7 +1,7 @@
 /*
  * mockups.js: statische Mockups für Gruppenübersicht, Gruppe erstellen, Beitreten und Rangliste
  * Welche Seite gerendert wird, steht in <body data-mockup="...">.
- * Die render-Funktionen erwarten Daten im Format der API (Projektplan Anhang 5)
+ * Die render-Funktionen erwarten Daten im Format der API
  * und sollen später unverändert mit echten Antworten laufen.
  */
 (function ($) {

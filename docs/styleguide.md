@@ -1,6 +1,6 @@
 # Styleguide Tipprunde
 
-<!-- KI-Log #4 – Styleguide, abgeleitet aus den Design-Mockups „Tipprunde“ -->
+<!-- Styleguide, abgeleitet aus den Design-Mockups „Tipprunde“ -->
 
 Verbindliche Gestaltungsgrundlage für alle Seiten von `tippseite-web`. Umsetzung in `public/css/style.css`, alle Komponenten zum Prüfen in `public/html/dev/StyleTest.html`.
 

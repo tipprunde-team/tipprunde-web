@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gruppe – Tipprunde</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body data-root="../../" data-nav="groups" data-group-tab="group">
+
+<header id="site-header"></header>
+
+<!-- Content stays hidden until requireLogin() has confirmed the session -->
+<main id="main" class="container group-info" style="display:none;">
+    <!-- Tabs Spieltag / Rangliste / Gruppe, filled by group-nav.js -->
+    <nav id="group-tabs" class="tabs" aria-label="Bereiche der Tippgruppe"></nav>
+
+    <h1 id="group-name" class="group-info__title">Tippgruppe</h1>
+
+    <div id="page-alert" class="alert" role="status" hidden></div>
+
+    <!-- Invite link, only visible for admins (inviteCode in the response) -->
+    <section id="invite-card" class="card" aria-labelledby="invite-title" hidden></section>
+
+    <!-- Member list, filled by group-info.js -->
+    <section id="members-card" class="card" aria-labelledby="members-title"></section>
+</main>
+
+<footer id="site-footer"></footer>
+
+<!-- Do not change the order -->
+<script src="../../js/jquery-3.6.0.min.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/layout.js"></script>
+<script src="../../js/auth-nav.js"></script>
+<script src="../../js/group-nav.js"></script>
+<script src="../../js/pages/group-info.js"></script>
+</body>
+</html>
