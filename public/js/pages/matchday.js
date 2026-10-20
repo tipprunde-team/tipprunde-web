@@ -1,7 +1,8 @@
 /*
- * matchday.js: Spieltagsseite
- * Vorerst mit Beispieldaten im Format von GET /api/groups/{groupId}/matches (API-Design 5.6).
- * Spaeter: renderMatchday(antwortDerApi) unveraendert aufrufen.
+ * matchday.js: matchday page of a group (US-17, US-20, US-21)
+ * Loads GET /api/groups/{groupId}/matches[?matchday=n] and saves tips via
+ * PUT /api/groups/{groupId}/matches/{matchId}/tip.
+ * The lock state comes only from the API field "locked" (server time), never from the device clock.
  */
 (function ($) {
     'use strict';
@@ -9,70 +10,24 @@
     var TZ = 'Europe/Berlin';
     var MIN_GOALS = 0;
     var MAX_GOALS = 20;
+    var FIRST_MATCHDAY = 1;
+    var LAST_MATCHDAY = 34;
 
-    // Beispieldaten: alle Zustaende eines Spieltags, Zeiten in UTC, passend zu serverTime
-    var SAMPLE_MATCHDAY = {
-        matchday: 7,
-        serverTime: '2026-10-18T14:00:00Z',
-        matches: [
-            {
-                id: 201, kickoff: '2026-10-16T18:30:00Z', status: 'FINISHED', locked: true,
-                homeTeam: { name: 'FC Bayern München', shortName: 'Bayern', crest: 'https://crests.football-data.org/5.png' },
-                awayTeam: { name: 'Borussia Dortmund', shortName: 'Dortmund', crest: 'https://crests.football-data.org/4.png' },
-                result: { home: 3, away: 1 }, myTip: { home: 3, away: 1 }, myPoints: 4
-            },
-            {
-                id: 202, kickoff: '2026-10-17T13:30:00Z', status: 'FINISHED', locked: true,
-                homeTeam: { name: 'SC Freiburg', shortName: 'Freiburg', crest: 'https://crests.football-data.org/17.png' },
-                awayTeam: { name: 'VfB Stuttgart', shortName: 'Stuttgart', crest: 'https://crests.football-data.org/10.png' },
-                result: { home: 0, away: 2 }, myTip: { home: 1, away: 3 }, myPoints: 3
-            },
-            {
-                id: 203, kickoff: '2026-10-17T13:30:00Z', status: 'FINISHED', locked: true,
-                homeTeam: { name: 'RB Leipzig', shortName: 'Leipzig', crest: 'https://crests.football-data.org/721.png' },
-                awayTeam: { name: 'Bayer 04 Leverkusen', shortName: 'Leverkusen', crest: 'https://crests.football-data.org/3.png' },
-                result: { home: 2, away: 0 }, myTip: { home: 3, away: 0 }, myPoints: 2
-            },
-            {
-                id: 204, kickoff: '2026-10-17T13:30:00Z', status: 'FINISHED', locked: true,
-                homeTeam: { name: 'VfL Wolfsburg', shortName: 'Wolfsburg', crest: 'https://crests.football-data.org/11.png' },
-                awayTeam: { name: '1. FSV Mainz 05', shortName: 'Mainz', crest: 'https://crests.football-data.org/15.png' },
-                result: { home: 1, away: 1 }, myTip: { home: 2, away: 0 }, myPoints: 0
-            },
-            {
-                id: 205, kickoff: '2026-10-17T13:30:00Z', status: 'CANCELLED', locked: true,
-                homeTeam: { name: '1. FC Köln', shortName: 'Köln', crest: 'https://crests.football-data.org/1.png' },
-                awayTeam: { name: 'Hamburger SV', shortName: 'HSV', crest: 'https://crests.football-data.org/7.png' },
-                result: null, myTip: null, myPoints: null
-            },
-            {
-                id: 206, kickoff: '2026-10-17T16:30:00Z', status: 'POSTPONED', locked: true,
-                homeTeam: { name: 'Borussia Mönchengladbach', shortName: 'Mönchengladbach', crest: 'https://crests.football-data.org/18.png' },
-                awayTeam: { name: '1. FC Union Berlin', shortName: 'Union Berlin', crest: 'https://crests.football-data.org/28.png' },
-                result: null, myTip: { home: 1, away: 0 }, myPoints: null
-            },
-            {
-                id: 207, kickoff: '2026-10-18T13:30:00Z', status: 'LIVE', locked: true,
-                homeTeam: { name: 'Eintracht Frankfurt', shortName: 'Frankfurt', crest: 'https://crests.football-data.org/19.png' },
-                awayTeam: { name: 'SV Werder Bremen', shortName: 'Bremen', crest: 'https://crests.football-data.org/12.png' },
-                result: null, myTip: { home: 2, away: 2 }, myPoints: null
-            },
-            {
-                id: 208, kickoff: '2026-10-18T15:30:00Z', status: 'UPCOMING', locked: false,
-                homeTeam: { name: 'TSG Hoffenheim', shortName: 'Hoffenheim', crest: 'https://crests.football-data.org/2.png' },
-                awayTeam: { name: 'FC Augsburg', shortName: 'Augsburg', crest: 'https://crests.football-data.org/16.png' },
-                result: null, myTip: null, myPoints: null
-            },
-            {
-                id: 209, kickoff: '2026-10-18T17:30:00Z', status: 'UPCOMING', locked: false,
-                homeTeam: { name: '1. FC Heidenheim 1846', shortName: 'Heidenheim', crest: 'https://crests.football-data.org/44.png' },
-                awayTeam: { name: 'FC St. Pauli', shortName: 'St. Pauli', crest: 'https://crests.football-data.org/20.png' },
-                result: null, myTip: { home: 2, away: 1 }, myPoints: null
-            }
-        ]
+    // Error texts at the card, by API error code
+    var TIP_ERRORS = {
+        INVALID_SCORE: 'Bitte für beide Teams eine ganze Zahl von 0 bis 20 eingeben.',
+        TIP_LOCKED: 'Das Spiel hat begonnen, Tipps sind jetzt gesperrt.',
+        MATCH_BEFORE_JOIN: 'Für Spiele, die vor deinem Beitritt begonnen haben, kannst du nicht tippen.',
+        NOT_A_MEMBER: 'Du bist kein Mitglied dieser Tippgruppe.',
+        MATCH_NOT_FOUND: 'Dieses Spiel gibt es nicht mehr. Bitte lade die Seite neu.'
     };
 
-    // ---------- Hilfsfunktionen ----------
+    var groupId = null;
+    var currentMatchday = null;
+    var serverTime = null;
+    var isLoading = false;
+
+    // ---------- Helpers ----------
 
     function formatTime(iso) {
         return new Date(iso).toLocaleString('de-DE', { timeZone: TZ, hour: '2-digit', minute: '2-digit' });
@@ -82,7 +37,7 @@
         return new Date(iso).toLocaleString('de-DE', { timeZone: TZ, weekday: 'long', day: 'numeric', month: 'long' });
     }
 
-    // Kalendertag in deutscher Zeit, damit Spiele nach Mitternacht UTC richtig gruppiert werden
+    // Calendar day in German time, so matches after midnight UTC are grouped correctly
     function dayKey(iso) {
         return new Date(iso).toLocaleDateString('de-DE', { timeZone: TZ });
     }
@@ -95,9 +50,9 @@
         return score ? score.home + ' : ' + score.away : '– : –';
     }
 
-    // Restzeit bis Anstoss, gemessen an der Serverzeit (nicht an der Geräteuhr)
-    function countdown(kickoff, serverTime) {
-        var mins = Math.floor((Date.parse(kickoff) - Date.parse(serverTime)) / 60000);
+    // Time left until kickoff, measured against server time (display only)
+    function countdown(kickoff, now) {
+        var mins = Math.floor((Date.parse(kickoff) - Date.parse(now)) / 60000);
         if (mins <= 0 || mins >= 24 * 60) {
             return '';
         }
@@ -106,7 +61,7 @@
         return 'noch ' + (h > 0 ? h + ' Std ' : '') + m + ' Min';
     }
 
-    // Zustand der Karte aus den API-Feldern ableiten
+    // Card state from the API fields; lock only via "locked" and status
     function stateOf(match) {
         if (match.status === 'CANCELLED') { return 'cancelled'; }
         if (match.status === 'POSTPONED') { return 'postponed'; }
@@ -119,22 +74,23 @@
         return $('<span class="badge">').addClass(cls).text(text);
     }
 
-    function statusBadge(state, match, serverTime) {
+    function statusBadge(state, match) {
         var left = countdown(match.kickoff, serverTime);
         switch (state) {
             case 'open': return badge('badge-warning', left ? 'Offen · ' + left : 'Offen');
             case 'tipped': return badge('badge-success', left ? 'Getippt · ' + left : 'Getippt');
-            case 'locked': return badge('badge-locked', 'Gesperrt · läuft');
+            case 'locked': return badge('badge-locked', 'Gesperrt');
             case 'postponed': return badge('badge-locked', 'Verschoben');
             case 'cancelled': return badge('badge-locked', 'Abgesagt');
             default:
-                // beendet: Punkte, bei 0 neutral
+                // finished: points, neutral at 0
                 if (match.myPoints > 0) { return badge('badge-success', '+' + match.myPoints + ' Punkte'); }
+                if (match.myPoints === null && match.myTip) { return badge('badge-neutral', 'Wertung folgt'); }
                 return badge('badge-neutral', match.myTip ? '0 Punkte' : 'Kein Tipp');
         }
     }
 
-    // Wappen als Bild; fehlt es oder lädt es nicht, steht das Kürzel im Kreis
+    // Crest as image; if missing or broken, the abbreviation is shown in the circle
     function crest(team) {
         var $badge = $('<span class="team-badge">');
         var abbr = teamAbbr(team);
@@ -158,59 +114,113 @@
         $target.text(text).toggleClass('is-error', !!isError).prop('hidden', false);
     }
 
-    // Eingabe prüfen: ganze Zahl von 0 bis 20
+    // Whole number from 0 to 20 (convenience only, the server validates again)
     function validGoals(value) {
         if (!/^\d{1,2}$/.test(value)) { return false; }
         var n = parseInt(value, 10);
         return n >= MIN_GOALS && n <= MAX_GOALS;
     }
 
-    function goalInput(match, side, team, disabled) {
+    function goalInput(match, side, team) {
         var id = 'tip-' + match.id + '-' + side;
         var $label = $('<label class="sr-only">').attr('for', id).text('Tore ' + (team.shortName || team.name));
         var $input = $('<input class="input tip-input" type="number" inputmode="numeric">')
-            .attr({ id: id, name: side, min: MIN_GOALS, max: MAX_GOALS, step: 1 })
-            .prop('disabled', disabled);
+            .attr({ id: id, name: side, min: MIN_GOALS, max: MAX_GOALS, step: 1 });
         if (match.myTip) {
             $input.val(match.myTip[side]);
         }
         return [$label, $input];
     }
 
-    function tipForm(match, disabled) {
-        var $form = $('<form class="tip-form" novalidate>');
-        var $fields = $('<div class="tip-fields">')
-            .append(goalInput(match, 'home', match.homeTeam, disabled))
-            .append($('<span class="tip-sep" aria-hidden="true">').text(':'))
-            .append(goalInput(match, 'away', match.awayTeam, disabled));
-        $form.append($fields);
+    // ---------- Save tip ----------
 
-        if (!disabled) {
-            var $feedback = $('<p class="tip-feedback" role="status" hidden>');
-            $form.append($('<button type="submit" class="btn btn-primary btn-block">').text('Tipp speichern'), $feedback);
-            $form.on('submit', function (e) {
-                e.preventDefault();
-                var home = $.trim($form.find('[name="home"]').val());
-                var away = $.trim($form.find('[name="away"]').val());
-                if (!validGoals(home) || !validGoals(away)) {
-                    hint($feedback, 'Bitte für beide Teams eine ganze Zahl von 0 bis 20 eingeben.', true);
+    function tipErrorText(err) {
+        return TIP_ERRORS[err.code] || err.message;
+    }
+
+    // Replace a card in place and optionally show a message on the new card
+    function replaceCard($oldCard, match, message, isError) {
+        var $newCard = matchCard(match);
+        $oldCard.replaceWith($newCard);
+        if (message) {
+            hint($newCard.find('.tip-feedback'), message, isError);
+        }
+        return $newCard;
+    }
+
+    function saveTip(match, $card, $form) {
+        var home = $.trim($form.find('[name="home"]').val());
+        var away = $.trim($form.find('[name="away"]').val());
+        var $feedback = $form.find('.tip-feedback');
+        var $fields = $form.find('input, button');
+
+        if (!validGoals(home) || !validGoals(away)) {
+            hint($feedback, TIP_ERRORS.INVALID_SCORE, true);
+            return;
+        }
+
+        // No double submit while the request is running
+        $fields.prop('disabled', true);
+        $feedback.prop('hidden', true);
+
+        var path = '/groups/' + encodeURIComponent(groupId) +
+            '/matches/' + encodeURIComponent(match.id) + '/tip';
+        apiRequest('PUT', path, { home: parseInt(home, 10), away: parseInt(away, 10) })
+            .then(function (saved) {
+                match.myTip = { home: saved.home, away: saved.away };
+                replaceCard($card, match, 'Tipp gespeichert', false);
+            })
+            .catch(function (err) {
+                if (err.code === 'TIP_LOCKED' || err.code === 'MATCH_BEFORE_JOIN') {
+                    // Server says no more tips: lock the card, keep the message
+                    match.locked = true;
+                    replaceCard($card, match, tipErrorText(err), true);
                     return;
                 }
-                // Speichern folgt mit PUT /api/groups/{groupId}/matches/{matchId}/tip
-                hint($feedback, 'Vorschau: Tipp ' + home + ' : ' + away + ' ist gültig. Speichern folgt mit der API.', false);
+                $fields.prop('disabled', false);
+                hint($feedback, tipErrorText(err), true);
             });
-        }
+    }
+
+    function tipForm(match, $card) {
+        var $form = $('<form class="tip-form" novalidate>');
+        var $fields = $('<div class="tip-fields">')
+            .append(goalInput(match, 'home', match.homeTeam))
+            .append($('<span class="tip-sep" aria-hidden="true">').text(':'))
+            .append(goalInput(match, 'away', match.awayTeam));
+        var $button = $('<button type="submit" class="btn btn-primary btn-block">')
+            .text(match.myTip ? 'Tipp ändern' : 'Tipp speichern');
+        var $feedback = $('<p class="tip-feedback" role="status" hidden>');
+
+        $form.append($fields, $button, $feedback);
+        $form.on('submit', function (e) {
+            e.preventDefault();
+            saveTip(match, $card, $form);
+        });
         return $form;
     }
 
-    function matchCard(match, serverTime) {
+    // ---------- Rendering ----------
+
+    function tipInfoText(state, match) {
+        switch (state) {
+            case 'cancelled': return 'Spiel wird nicht gewertet';
+            case 'postponed': return 'Neuer Termin folgt';
+            case 'finished':
+            case 'locked':
+                return match.myTip ? 'Dein Tipp: ' + scoreText(match.myTip) : 'Kein Tipp abgegeben';
+            default: return 'Dein Tipp';
+        }
+    }
+
+    function matchCard(match) {
         var state = stateOf(match);
         var $card = $('<article class="match-card">').addClass('match-card--' + state)
             .attr('aria-label', match.homeTeam.name + ' gegen ' + match.awayTeam.name);
 
         $('<div class="match-card__top">')
             .append($('<span class="match-time">').text(formatTime(match.kickoff)))
-            .append(statusBadge(state, match, serverTime))
+            .append(statusBadge(state, match))
             .appendTo($card);
 
         var showScore = state === 'finished' || (state === 'locked' && match.result);
@@ -220,29 +230,16 @@
             .append(teamEl(match.awayTeam, true))
             .appendTo($card);
 
-        var $info = $('<p class="match-card__tip">');
-        if (state === 'cancelled') {
-            $info.text('Spiel wird nicht gewertet');
-        } else if (state === 'postponed') {
-            $info.text('Neuer Termin folgt');
-        } else if (state === 'finished') {
-            $info.text(match.myTip ? 'Dein Tipp: ' + scoreText(match.myTip) : 'Kein Tipp abgegeben');
-        } else if (state === 'locked') {
-            $info.text(match.result ? 'Zwischenstand · Ergebnis folgt' : 'Läuft · Ergebnis folgt');
-        } else {
-            $info.text('Dein Tipp');
-        }
-        $card.append($info);
+        $card.append($('<p class="match-card__tip">').text(tipInfoText(state, match)));
 
         if (state === 'open' || state === 'tipped') {
-            $card.append(tipForm(match, false));
-        } else if (state === 'locked' || state === 'postponed') {
-            $card.append(tipForm(match, true));
+            $card.append(tipForm(match, $card));
+        } else {
+            // Locked cards have no input, only a slot for messages
+            $card.append($('<p class="tip-feedback" role="status" hidden>'));
         }
         return $card;
     }
-
-    // ---------- Rendern ----------
 
     function renderMatchday(data) {
         var $list = $('#matchday-list').empty();
@@ -268,23 +265,82 @@
                     .append($group)
                     .appendTo($list);
             }
-            $group.append(matchCard(match, data.serverTime));
+            $group.append(matchCard(match));
         });
+    }
+
+    // ---------- Loading and navigation ----------
+
+    // Matchday from ?matchday= (1 to 34), otherwise null = current matchday
+    function readMatchdayFromUrl() {
+        var raw = new URLSearchParams(window.location.search).get('matchday');
+        if (raw === null || !/^\d{1,2}$/.test(raw)) {
+            return null;
+        }
+        var n = parseInt(raw, 10);
+        return n >= FIRST_MATCHDAY && n <= LAST_MATCHDAY ? n : null;
+    }
+
+    // Keep groupId and matchday in the URL, so reloading shows the same matchday
+    function writeMatchdayToUrl(matchday) {
+        var params = new URLSearchParams(window.location.search);
+        params.set('groupId', groupId);
+        params.set('matchday', matchday);
+        window.history.replaceState(null, '', window.location.pathname + '?' + params.toString());
+    }
+
+    function updateNav() {
+        $('#md-prev').prop('disabled', isLoading || currentMatchday === null || currentMatchday <= FIRST_MATCHDAY);
+        $('#md-next').prop('disabled', isLoading || currentMatchday === null || currentMatchday >= LAST_MATCHDAY);
+    }
+
+    function loadMatchday(matchday) {
+        var path = '/groups/' + encodeURIComponent(groupId) + '/matches';
+        if (matchday !== null) {
+            path += '?matchday=' + encodeURIComponent(matchday);
+        }
+
+        isLoading = true;
+        updateNav();
+        $('#page-alert').hide().text('');
+
+        apiRequest('GET', path)
+            .then(function (data) {
+                currentMatchday = data.matchday;
+                serverTime = data.serverTime;
+                renderMatchday(data);
+                writeMatchdayToUrl(data.matchday);
+            })
+            .catch(function (err) {
+                $('#page-alert').prop('hidden', false);
+                showError('#page-alert', err);
+            })
+            .then(function () {
+                isLoading = false;
+                updateNav();
+            });
     }
 
     window.renderMatchday = renderMatchday;
 
     $(function () {
-        renderMatchday(SAMPLE_MATCHDAY);
+        // Protected page: without a session redirect to login with return path
+        if (!requireLogin()) {
+            return;
+        }
+        // group-nav.js already redirected if the groupId is missing
+        groupId = getGroupId();
+        if (groupId === null) {
+            return;
+        }
 
-        var $alert = $('#page-alert');
-        // Platzhalter, bis Rangliste, Gruppe und weitere Spieltage angebunden sind
-        $('#md-prev, #md-next').on('click', function () {
-            hint($alert, 'Andere Spieltage folgen, sobald die API angebunden ist.');
+        $('#md-prev').on('click', function () {
+            if (currentMatchday > FIRST_MATCHDAY) { loadMatchday(currentMatchday - 1); }
         });
-        $('.tabs [data-soon]').on('click', function (e) {
-            e.preventDefault();
-            hint($alert, 'Die Ansicht „' + $(this).attr('data-soon') + '“ folgt in der nächsten Phase.');
+        $('#md-next').on('click', function () {
+            if (currentMatchday < LAST_MATCHDAY) { loadMatchday(currentMatchday + 1); }
         });
+
+        loadMatchday(readMatchdayFromUrl());
     });
 })(jQuery);
