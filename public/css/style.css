@@ -1,11 +1,46 @@
 /* ==========================================================================
    Tipprunde – zentrales Stylesheet
    Grundlage: docs/styleguide.md.
-   Mobile first, Breakpoint ab 768 px. Keine Bibliotheken außer Google Fonts.
+   Mobile first, Breakpoint ab 768 px. No external libraries, fonts are self-hosted.
    ========================================================================== */
 
-/* Google Fonts: Barlow Condensed (Überschriften), Inter (Fließtext) */
-@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap");
+/* Self-hosted fonts (public/fonts, SIL Open Font License, latin subset incl. umlauts).
+   No requests to Google: visitor IP addresses are not sent to third parties. */
+@font-face {
+    font-family: "Barlow Condensed";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("../fonts/barlow-condensed-latin-600-normal.woff2") format("woff2");
+}
+@font-face {
+    font-family: "Barlow Condensed";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("../fonts/barlow-condensed-latin-700-normal.woff2") format("woff2");
+}
+@font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../fonts/inter-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("../fonts/inter-latin-500-normal.woff2") format("woff2");
+}
+@font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("../fonts/inter-latin-600-normal.woff2") format("woff2");
+}
 
 /* ---------- 1. Design-Tokens ---------- */
 /* Variablen laut Styleguide */
