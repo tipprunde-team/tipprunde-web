@@ -1,28 +1,11 @@
 /*
  * group-info.js: group page with members and invite link (US-11, part of US-08)
- * For now uses sample data in the exact format of GET /api/groups/{groupId} (see API design).
- * Later: replace SAMPLE_GROUP with
- *   apiRequest('GET', '/groups/' + getGroupId()).then(renderGroup).catch(...)
- * renderGroup(data) stays unchanged.
+ * Loads GET /api/groups/{groupId}; inviteCode is only included for admins.
  */
 (function ($) {
     'use strict';
 
     var TZ = 'Europe/Berlin';
-
-    // Sample response of GET /api/groups/{groupId}; inviteCode is only sent to admins
-    var SAMPLE_GROUP = {
-        id: 3,
-        name: 'WG Lohrtalweg',
-        currentMatchday: 6,
-        inviteCode: 'k7Qp2xZ9',
-        members: [
-            { userId: 7, username: 'niklas', role: 'ADMIN', joinedAt: '2026-10-01T18:00:00Z' },
-            { userId: 12, username: 'maximilian', role: 'MEMBER', joinedAt: '2026-10-01T18:05:00Z' },
-            { userId: 15, username: 'arlind', role: 'MEMBER', joinedAt: '2026-10-02T07:40:00Z' },
-            { userId: 21, username: 'max', role: 'MEMBER', joinedAt: '2026-10-03T19:12:00Z' }
-        ]
-    };
 
     var ROLE_LABELS = { ADMIN: 'Admin', MEMBER: 'Mitglied' };
 
@@ -172,6 +155,19 @@
             return;
         }
         $('#main').show();
-        renderGroup(SAMPLE_GROUP);
+
+        // group-nav.js already redirected if the groupId is missing
+        var groupId = getGroupId();
+        if (groupId === null) {
+            return;
+        }
+        apiRequest('GET', '/groups/' + encodeURIComponent(groupId))
+            .then(renderGroup)
+            .catch(function (err) {
+                // 403 NOT_A_MEMBER, 404 GROUP_NOT_FOUND or network error
+                $('#members-card').prop('hidden', true);
+                $('#page-alert').prop('hidden', false);
+                showError('#page-alert', err);
+            });
     });
 })(jQuery);
