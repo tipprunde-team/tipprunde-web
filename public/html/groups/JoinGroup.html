@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gruppe beitreten – Tipprunde</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body data-root="../../" data-nav="groups">
+
+<header id="site-header"></header>
+
+<!-- Öffentliche Seite: Vorschau geht auch ohne Anmeldung, erst Beitreten verlangt Login -->
+<main id="main" class="container narrow">
+    <h1>Gruppe beitreten</h1>
+    <p class="page-lead">Gib den Einladungscode ein oder füge den Einladungslink ein, den du vom Admin bekommen hast.</p>
+
+    <div id="page-alert" class="alert" hidden></div>
+
+    <div class="card">
+        <form id="join-form" novalidate>
+            <div class="form-group">
+                <label class="label" for="invite-code">Einladungscode</label>
+                <input class="input" type="text" id="invite-code" name="inviteCode" autocomplete="off" spellcheck="false" required>
+            </div>
+            <button type="submit" id="check-button" class="btn btn-secondary btn-block">Code prüfen</button>
+        </form>
+    </div>
+
+    <!-- Vorschau der Gruppe mit Beitreten-Button, füllt join-group.js -->
+    <div class="card" id="join-preview" aria-live="polite" hidden></div>
+</main>
+
+<footer id="site-footer"></footer>
+
+<!-- Reihenfolge nicht ändern -->
+<script src="../../js/jquery-3.6.0.min.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/layout.js"></script>
+<script src="../../js/auth-nav.js"></script>
+<script src="../../js/pages/join-group.js"></script>
+</body>
+</html>
