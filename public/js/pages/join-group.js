@@ -108,8 +108,15 @@
             .append($('<h2 class="join-preview__name">').text(preview.groupName))
             .append($('<p class="join-preview__meta">').text(membersText(preview.memberCount)))
             .append($join);
+
         if (!loggedIn) {
-            $card.append($('<p class="form-hint">').text('Nach der Anmeldung kommst du hierher zurück.'));
+            // Neue Nutzer registrieren sich und kommen danach hierher zurück
+            var current = window.location.pathname + window.location.search;
+            var registerUrl = getSiteRoot() + 'html/auth/Register.html?redirect=' + encodeURIComponent(current);
+            $card.append($('<p class="form-hint">')
+                .append(document.createTextNode('Noch kein Konto? '))
+                .append($('<a>').attr('href', registerUrl).text('Konto erstellen'))
+                .append(document.createTextNode(' Danach kommst du hierher zurück.')));
         }
         $card.prop('hidden', false);
     }
