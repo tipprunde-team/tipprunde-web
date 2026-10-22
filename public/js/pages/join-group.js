@@ -6,21 +6,6 @@
 (function ($) {
     'use strict';
 
-    // Vorübergehend: Beispieldaten 
-    // Max' Endpunkte sind noch nicht in main. Sobald sie gemerged sind:
-    // USE_SAMPLE_DATA auf false setzen und SAMPLE_INVITES löschen.
-    var USE_SAMPLE_DATA = true;
-
-    var SAMPLE_INVITES = {
-        // Beitritt klappt
-        TESTneu001: { preview: { groupId: 2, groupName: 'TEST Beispielgruppe', memberCount: 3 }, joinError: null },
-        // tester2 ist in Gruppe 2 schon Admin
-        Gwba54jFut: { preview: { groupId: 2, groupName: 'TEST Niklas 1', memberCount: 1 }, joinError: 'ALREADY_MEMBER' },
-        // Gruppe ist voll
-        TESTvoll01: { preview: { groupId: 2, groupName: 'TEST Volle Gruppe', memberCount: 200 }, joinError: 'GROUP_FULL' }
-    };
-    // Ende Beispieldaten
-
     var CODE_PATTERN = /^[A-Za-z0-9_-]{4,64}$/;
 
     var JOIN_ERRORS = {
@@ -28,30 +13,15 @@
         GROUP_FULL: 'Diese Tippgruppe ist voll. Eine Gruppe hat höchstens 200 Mitglieder.'
     };
 
-    function sampleError(status, code) {
-        return Promise.reject({ status: status, code: code, message: JOIN_ERRORS[code] || code });
-    }
-
     function fetchPreview(code) {
-        if (!USE_SAMPLE_DATA) {
-            return apiRequest('GET', '/invites/' + encodeURIComponent(code));
-        }
-        var invite = SAMPLE_INVITES[code];
-        return invite ? Promise.resolve(invite.preview) : sampleError(404, 'INVITE_INVALID');
+        return apiRequest('GET', '/invites/' + encodeURIComponent(code));
     }
 
     function joinGroup(code) {
-        if (!USE_SAMPLE_DATA) {
-            return apiRequest('POST', '/groups/join', { inviteCode: code });
-        }
-        var invite = SAMPLE_INVITES[code];
-        if (!invite) {
-            return sampleError(404, 'INVITE_INVALID');
-        }
-        return invite.joinError ? sampleError(409, invite.joinError) : Promise.resolve({ id: invite.preview.groupId });
+        return apiRequest('POST', '/groups/join', { inviteCode: code });
     }
 
-    // Hilfsfunktionen
+    // ---------- Hilfsfunktionen ----------
 
     function errorText(err) {
         return JOIN_ERRORS[err.code] || err.message;
@@ -99,7 +69,7 @@
         window.location.href = getSiteRoot() + 'html/matchday/Matchday.html?groupId=' + encodeURIComponent(groupId);
     }
 
-    // Ablauf
+    // ---------- Ablauf ----------
 
     function join(code, preview, $button) {
         // Beitreten nur mit Login, danach zurück auf diese URL inkl. Code
@@ -173,10 +143,6 @@
     }
 
     $(function () {
-        if (USE_SAMPLE_DATA) {
-            console.warn('[join-group] Beispieldaten aktiv, bis /api/invites und /api/groups/join gemerged sind.');
-        }
-
         $('#join-form').on('submit', function (event) {
             event.preventDefault();
             var code = extractCode($('#invite-code').val());
