@@ -6,7 +6,7 @@
     <title>Datenschutz – Tipprunde</title>
     <link rel="stylesheet" href="../../css/style.css">
 </head>
-<!-- Datenschutzerklaerung (Entwurf, Platzhalter in eckigen Klammern vor Veroeffentlichung pruefen) -->
+<!-- Privacy policy of a student project. Responsible person and database region are fictitious (see notice box). -->
 <body data-root="../../" data-nav="">
 
 <header id="site-header"></header>
@@ -14,13 +14,21 @@
 <main id="main" class="container legal">
     <h1>Datenschutz&shy;erklärung</h1>
 
-    <p class="placeholder">
-        [Entwurf für ein Studienprojekt. Vor einer öffentlichen Freigabe vollständig prüfen.]
+    <div class="alert">
+        Hinweis: Die Tipprunde ist ein Studienprojekt. Die verantwortliche Person aus dem Impressum und die
+        Region der Datenbank sind erfundene Angaben zur Vervollständigung des Projekts. Die übrigen Angaben
+        beschreiben die Dienste, die wir tatsächlich einsetzen.
+    </div>
+
+    <p>
+        Die Tipprunde ist ein nicht-kommerzielles Studienprojekt an der DHBW Mosbach (Kurs WI25A).
+        Wir verarbeiten nur die Daten, die für den Betrieb der Tippseite nötig sind.
     </p>
 
     <h2>1. Verantwortlich</h2>
     <p>
-        <span class="placeholder">[Name, Anschrift, E-Mail wie im Impressum]</span>
+        Verantwortlich ist die im <a href="Impressum.html">Impressum</a> genannte Person.
+        Dort findest du auch die Kontaktadresse.
     </p>
 
     <h2>2. Welche Daten wir verarbeiten</h2>
@@ -33,6 +41,10 @@
         <li>ein Anmelde-Token mit Ablaufzeit, solange du eingeloggt bist</li>
     </ul>
     <p>
+        Beim Aufruf der Seiten verarbeiten unsere Hosting-Anbieter außerdem technisch notwendige Daten,
+        vor allem deine IP-Adresse, den Zeitpunkt und die aufgerufene Adresse (Server-Logs).
+    </p>
+    <p>
         Wir verwenden keine Cookies, kein Tracking und keine Werbung. Das Anmelde-Token liegt im
         Sitzungsspeicher deines Browsers (sessionStorage) und wird beim Schließen des Tabs gelöscht.
     </p>
@@ -40,9 +52,9 @@
     <h2>3. Zweck und Rechtsgrundlage</h2>
     <p>
         Wir verarbeiten die Daten, um dir die Tipprunde bereitzustellen: Konto, Gruppen, Tipps,
-        Punkte und Rangliste (Art. 6 Abs. 1 lit. b DSGVO). Fehlgeschlagene Anmeldeversuche und
-        abgelehnte Zugriffe protokollieren wir ohne Passwörter, um Missbrauch zu erkennen
-        (Art. 6 Abs. 1 lit. f DSGVO).
+        Punkte und Rangliste (Art. 6 Abs. 1 lit. b DSGVO). Server-Logs, fehlgeschlagene Anmeldeversuche
+        und abgelehnte Zugriffe nutzen wir ohne Passwörter, um den Betrieb abzusichern und Missbrauch
+        zu erkennen (Art. 6 Abs. 1 lit. f DSGVO).
     </p>
 
     <h2>4. Wer die Daten sieht</h2>
@@ -53,35 +65,46 @@
 
     <h2>5. Hosting und Datenbank</h2>
     <p>
-        Die Anwendung läuft bei <span class="placeholder">[Hosting-Anbieter, Sitz]</span>.
-        Die Datenbank wird bei Aiven betrieben, Region <span class="placeholder">[Region prüfen]</span>.
-        Beim Aufruf der Seite verarbeitet der Hosting-Anbieter technisch notwendige Daten wie deine
-        IP-Adresse <span class="placeholder">[Speicherdauer der Server-Logs beim Anbieter prüfen]</span>.
+        Die Seiten der Tipprunde werden über GitHub Pages ausgeliefert, einen Dienst der GitHub, Inc. (USA).
+        GitHub speichert beim Aufruf die IP-Adresse der Besucher zu Sicherheitszwecken.
+    </p>
+    <p>
+        Der Server der Tipprunde läuft bei Heroku, einem Dienst der Heroku, Inc., einer Tochter der
+        Salesforce, Inc. (USA), in der Region Europa. Heroku protokolliert dabei unter anderem die IP-Adresse.
+    </p>
+    <p>
+        Die Datenbank wird bei Aiven Oy (Finnland) in einem Rechenzentrum in Frankfurt am Main
+        betrieben (fiktive Angabe).
+    </p>
+    <p>
+        GitHub und Heroku nehmen am EU-US Data Privacy Framework teil. Übermittlungen in die USA stützen
+        sich auf den Angemessenheitsbeschluss der EU-Kommission (Art. 45 DSGVO).
     </p>
 
     <h2>6. Externe Inhalte</h2>
     <p>
         Vereinswappen werden von Servern von football-data.org geladen. Dabei wird deine IP-Adresse
-        an diesen Anbieter übertragen.
-        <span class="placeholder">[Falls Schriftarten von Google Fonts geladen werden: hier ergänzen oder Schriften lokal einbinden.]</span>
+        an diesen Anbieter übertragen. Schriftarten binden wir lokal ein; dabei werden keine Daten an
+        Dritte wie Google übertragen.
     </p>
 
     <h2>7. Speicherdauer</h2>
     <p>
-        Wir speichern deine Daten, solange dein Konto besteht. Wenn du dein Konto löschst, entfernen wir
-        alle zugehörigen Daten einschließlich deiner Tipps endgültig. Anmelde-Tokens laufen nach
-        <span class="placeholder">[24 Stunden]</span> ab.
+        Wir speichern deine Daten, solange dein Konto besteht. Auf Anfrage löschen wir dein Konto mit allen
+        zugehörigen Daten einschließlich deiner Tipps endgültig. Anmelde-Tokens laufen nach 24 Stunden ab.
+        Die Server-Logs bei Heroku werden nur kurzfristig vorgehalten (die letzten 1.500 Zeilen,
+        höchstens etwa eine Woche) und nur zur Fehlersuche genutzt.
     </p>
 
     <h2>8. Deine Rechte</h2>
     <p>
         Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung,
         Datenübertragbarkeit und Widerspruch (Art. 15 bis 21 DSGVO). Außerdem kannst du dich bei einer
-        Datenschutz-Aufsichtsbehörde beschweren (Art. 77 DSGVO). Schreib uns dazu an
-        <span class="placeholder">[Projekt-E-Mail-Adresse]</span>.
+        Datenschutz-Aufsichtsbehörde beschweren (Art. 77 DSGVO). Schreib uns dazu an die im
+        <a href="Impressum.html">Impressum</a> genannte E-Mail-Adresse.
     </p>
 
-    <p class="section-note">Stand: <span class="placeholder">[Datum]</span></p>
+    <p class="section-note">Stand: Oktober 2026</p>
 </main>
 
 <footer id="site-footer"></footer>

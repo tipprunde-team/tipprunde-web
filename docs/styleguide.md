@@ -4,7 +4,7 @@
 
 Verbindliche Gestaltungsgrundlage für alle Seiten von `tippseite-web`. Umsetzung in `public/css/style.css`, alle Komponenten zum Prüfen in `public/html/dev/StyleTest.html`.
 
-**Grundsätze:** dunkles Navy, oranger Akzent, mobile first. Kein Bootstrap, keine Bibliotheken außer Google Fonts. Texte für Nutzer auf Deutsch, Klassen und Bezeichner auf Englisch.
+**Grundsätze:** dunkles Navy, oranger Akzent, mobile first. Kein Bootstrap, keine externen Bibliotheken; Schriften liegen selbst gehostet in `public/fonts` (keine Anfragen an Google). Texte für Nutzer auf Deutsch, Klassen und Bezeichner auf Englisch.
 
 ## 1 Farben
 
@@ -26,8 +26,8 @@ Farben nie direkt als Hex-Wert in Seiten verwenden, immer über `var(--color-…
 
 | Rolle | Schrift | Stil |
 |---|---|---|
-| Überschriften, Buttons, Tabs | Barlow Condensed (Google Fonts) | fett (700), kondensiert, VERSALIEN |
-| Fließtext, Labels, Formulare | Inter (Google Fonts), Fallback System-Font | normal 400, Labels 600 |
+| Überschriften, Buttons, Tabs | Barlow Condensed (selbst gehostet, `public/fonts`) | fett (700), kondensiert, VERSALIEN |
+| Fließtext, Labels, Formulare | Inter (selbst gehostet, `public/fonts`), Fallback System-Font | normal 400, Labels 600 |
 
 Schriftgrößen (mobil → ab 768 px): H1 2 → 2,75 rem, H2 1,5 → 2 rem, H3 1,25 → 1,5 rem, Text 1 rem, klein 0,875 rem.
 
