@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gruppe erstellen – Tipprunde</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body data-root="../../" data-nav="groups">
+
+<header id="site-header"></header>
+
+<!-- Inhalt bleibt verborgen, bis requireLogin() die Sitzung bestätigt hat -->
+<main id="main" class="container narrow" style="display:none;">
+    <h1>Gruppe erstellen</h1>
+    <p class="page-lead" id="create-lead">Du wirst automatisch Admin und bekommst einen Einladungslink für deine Mitspieler.</p>
+
+    <div id="page-alert" class="alert" hidden></div>
+
+    <div class="card" id="create-card">
+        <form id="create-form" novalidate>
+            <div class="form-group">
+                <label class="label" for="group-name">Name der Tippgruppe</label>
+                <input class="input" type="text" id="group-name" name="name" maxlength="50" autocomplete="off" required>
+                <span class="char-count" id="name-count">0 / 50</span>
+            </div>
+            <button type="submit" id="create-button" class="btn btn-primary btn-block">Gruppe erstellen</button>
+        </form>
+    </div>
+
+    <!-- Erfolgsansicht mit Code und Einladungslink, füllt create-group.js -->
+    <div class="card" id="created-card" hidden></div>
+</main>
+
+<footer id="site-footer"></footer>
+
+<!-- Reihenfolge nicht ändern -->
+<script src="../../js/jquery-3.6.0.min.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/layout.js"></script>
+<script src="../../js/auth-nav.js"></script>
+<script src="../../js/pages/create-group.js"></script>
+</body>
+</html>

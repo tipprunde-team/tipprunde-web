@@ -49,6 +49,12 @@ $(function () {
     showSuccess('#page-alert', 'Konto angelegt, bitte anmelden.');
   }
 
+  // Rücksprung auch an den Link "Registrieren" weitergeben (z. B. von einer Einladung)
+  var target = getSafeRedirect();
+  if (target !== null) {
+    $('a[href="Register.html"]').attr('href', 'Register.html?redirect=' + encodeURIComponent(target));
+  }
+
   $('#logon-form').on('submit', function (event) {
     event.preventDefault();
 

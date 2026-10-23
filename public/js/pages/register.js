@@ -27,6 +27,20 @@ function validateRegister(email, username, password, password2) {
   return null;
 }
 
+// Rücksprung aus der URL, wird nur an den Login weitergereicht
+// (logon.js prüft ihn mit getSafeRedirect, bevor er benutzt wird)
+function getRedirectParam() {
+  return new URLSearchParams(window.location.search).get('redirect');
+}
+
+function withRedirect(url) {
+  var redirect = getRedirectParam();
+  if (!redirect) {
+    return url;
+  }
+  return url + (url.indexOf('?') === -1 ? '?' : '&') + 'redirect=' + encodeURIComponent(redirect);
+}
+
 // alle Meldungen ausblenden
 function clearErrors() {
   $('#page-alert').hide();
@@ -45,6 +59,9 @@ $(function () {
     window.location.replace(getSiteRoot() + 'html/groups/Groups.html');
     return;
   }
+
+  // Link "Anmelden" behält den Rücksprung, falls jemand doch schon ein Konto hat
+  $('a[href="Logon.html"]').attr('href', withRedirect('Logon.html'));
 
   $('#register-form').on('submit', function (event) {
     event.preventDefault();
@@ -66,8 +83,8 @@ $(function () {
 
     apiRequest('POST', '/users', { email: email, username: username, password: password })
       .then(function () {
-        // Erfolg -> zum Login mit Hinweis
-        window.location.replace('Logon.html?registered=1');
+        // Erfolg -> zum Login mit Hinweis, Rücksprung bleibt erhalten
+        window.location.replace(withRedirect('Logon.html?registered=1'));
       })
       .catch(function (err) {
         if (err.code === 'EMAIL_TAKEN') {
