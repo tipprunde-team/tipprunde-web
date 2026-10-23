@@ -1,5 +1,5 @@
 // Live-URL des Core-Service, einzige Stelle zum Ändern bei der Server-Anbindung (22.10.)
-var LIVE_API_BASE_URL = 'https://TODO-HEROKU-APP.herokuapp.com/api';
+var LIVE_API_BASE_URL = 'https://tipprunde-rest-b06734b76aad.herokuapp.com/api';
 var LOCAL_API_BASE_URL = 'http://localhost:8080/api';
 
 // Seiten von diesen Hosts nutzen das lokale Backend ('' steht für file://)
