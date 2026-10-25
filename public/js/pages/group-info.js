@@ -66,6 +66,19 @@
         }
     }
 
+    // Teilen-Menü des Geräts (CR-01); Abbrechen ist ok, andere Fehler: Link kopieren
+    function shareInviteLink(group, link, $input, $copyButton, $status) {
+        navigator.share({
+            title: 'Tipprunde',
+            text: 'Tritt meiner Tippgruppe „' + group.name + '“ bei:',
+            url: link
+        }).catch(function (err) {
+            if (!err || err.name !== 'AbortError') {
+                copyInviteLink(link, $input, $copyButton, $status);
+            }
+        });
+    }
+
     // ---------- Rendering ----------
 
     function renderInvite(group) {
@@ -84,6 +97,16 @@
         $button.on('click', function () {
             copyInviteLink(link, $input, $button, $status);
         });
+
+        // Teilen nur, wo der Browser es kann (meist Handy); Kopieren wird dann zweitrangig
+        var $share = null;
+        if (navigator.share) {
+            $share = $('<button type="button" class="btn btn-primary" id="share-invite">').text('Teilen');
+            $button.removeClass('btn-primary').addClass('btn-secondary');
+            $share.on('click', function () {
+                shareInviteLink(group, link, $input, $button, $status);
+            });
+        }
         // Click into the field selects the whole link
         $input.on('focus', function () { $(this).trigger('select'); });
 
@@ -91,7 +114,7 @@
             .append($('<h2 class="card-title" id="invite-title">').text('Mitglieder einladen'))
             .append($('<p class="text-muted">').text('Teile den Link, damit andere deiner Tippgruppe beitreten können.'))
             .append($('<label class="label" for="invite-link">').text('Einladungslink'))
-            .append($('<div class="invite-link">').append($input, $button))
+            .append($('<div class="invite-link">').append($input, $share, $button))
             .append($('<p class="invite-code-line">')
                 .append(document.createTextNode('Einladungscode: '))
                 .append($('<code class="invite-code-inline">').text(group.inviteCode)))
