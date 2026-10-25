@@ -1377,3 +1377,83 @@ main {
     .invite-link .btn { flex: 0 0 auto; }
     .member { padding: var(--space-3) var(--space-4); }
 }
+
+
+/* ==========================================================
+   Mobiler Feinschliff (CR-01, US-28)
+   Ergebnis des Checks bei 360/320 px: Header einzeilig,
+   Tippflächen mind. 44 px, kein Zoom bei Eingabe, kein Seitwärts-Scrollen.
+   ========================================================== */
+
+/* Footer-Links und Umschalter Rangliste: Tippfläche mind. 44 px */
+.footer-links a { display: inline-flex; align-items: center; min-height: 44px; }
+.segmented button { min-height: 44px; }
+
+/* Startseite: lange Wörter in der Überschrift dürfen das Grid nicht verbreitern (Scrollen bei 320 px) */
+.hero > * { min-width: 0; }
+.hero h1 { overflow-wrap: break-word; hyphens: auto; }
+
+/* Spielkarten: lange Teamnamen dürfen schrumpfen statt die Karte zu verbreitern */
+.match-card__teams { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+.team { min-width: 0; overflow-wrap: anywhere; }
+
+/* Benutzerbereich im Menü, nur Handy (füllt layout.js) */
+.nav-menu-user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+    padding: var(--space-2) var(--space-3) 0;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+.nav-menu-user strong { color: var(--color-text); overflow-wrap: anywhere; }
+.nav-menu-user__logout {
+    min-height: 44px;
+    padding: 0 var(--space-3);
+    background: transparent;
+    color: var(--color-accent);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+@media (max-width: 767.98px) {
+    /* Header einzeilig: kleineres Logo, Menü-Button nur Symbol, Name und Abmelden ins Menü */
+    .site-header .container { gap: var(--space-2) var(--space-3); }
+    .site-header .logo img { height: 26px; }
+    #nav-user .nav-username,
+    #nav-user #logout-button { display: none; }
+    #nav-user .btn { padding: var(--space-1) var(--space-3); font-size: var(--font-size-base); }
+    .nav-toggle { width: 44px; padding: 0; justify-content: center; }
+    .nav-toggle__label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+
+    /* iOS zoomt in Felder unter 16 px Schrift */
+    .input,
+    .invite-link .input,
+    select,
+    textarea { font-size: 16px; }
+}
+
+@media (min-width: 768px) {
+    .nav-menu-user { display: none; }
+}
+
+/* Sehr kleine Handys: Rangliste scrollt in ihrer Karte, nie die ganze Seite */
+.ranking-wrap { overflow-x: auto; }
+@media (max-width: 359.98px) {
+    .ranking-table th,
+    .ranking-table td { padding-left: var(--space-1); padding-right: var(--space-1); font-size: var(--font-size-sm); }
+}

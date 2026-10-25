@@ -39,6 +39,25 @@
         return $a;
     }
 
+    // Nur Handy (ab 768 px per CSS ausgeblendet): Benutzername und Abmelden im Menue,
+    // damit der Header einzeilig bleibt. Abmelden nutzt den Button aus auth-nav.js.
+    function renderMenuUser($nav) {
+        if (typeof isLoggedIn !== 'function' || !isLoggedIn()) {
+            return;
+        }
+        var $logout = $('<button type="button" class="nav-menu-user__logout">').text('Abmelden');
+        $logout.on('click', function () {
+            $logout.prop('disabled', true);
+            $('#logout-button').trigger('click');
+        });
+        $('<div class="nav-menu-user">')
+            .append($('<span class="nav-menu-user__name">')
+                .append(document.createTextNode('Angemeldet als '))
+                .append($('<strong>').text(getUsername() || '')))
+            .append($logout)
+            .appendTo($nav);
+    }
+
     function renderHeader(root, activeKey) {
         var $header = $('#site-header');
         if (!$header.length) {
@@ -56,6 +75,7 @@
         NAV_ITEMS.forEach(function (item) {
             $nav.append(link(root, item, activeKey));
         });
+        renderMenuUser($nav);
         $container.append($nav);
 
         // Platzhalter: fuellt Niklas mit auth-nav.js (Benutzername, Abmelden)
