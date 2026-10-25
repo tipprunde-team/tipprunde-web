@@ -3,6 +3,8 @@
  * Loads GET /api/groups/{groupId}/matches[?matchday=n] and saves tips via
  * PUT /api/groups/{groupId}/matches/{matchId}/tip.
  * The lock state comes only from the API field "locked" (server time), never from the device clock.
+ * Bei offener Seite: Serverzeit aus serverTime plus vergangener Zeit schätzen und Karten ab Anstoß
+ * sperren (US-21). Beim Speichern entscheidet weiterhin der Server.
  */
 (function ($) {
     'use strict';
@@ -22,9 +24,12 @@
         MATCH_NOT_FOUND: 'Dieses Spiel gibt es nicht mehr. Bitte lade die Seite neu.'
     };
 
+    var LOCK_CHECK_MS = 30000;
+
     var groupId = null;
     var currentMatchday = null;
     var serverTime = null;
+    var serverOffsetMs = 0;
     var isLoading = false;
 
     // ---------- Helpers ----------
@@ -48,6 +53,12 @@
 
     function scoreText(score) {
         return score ? score.home + ' : ' + score.away : '– : –';
+    }
+
+    // Geschätzte Serverzeit: letzte serverTime der API plus seitdem vergangene Zeit.
+    // Geräteuhr misst nur die Dauer, eine falsch gestellte Uhr spielt keine Rolle.
+    function serverNowIso() {
+        return new Date(Date.now() + serverOffsetMs).toISOString();
     }
 
     // Time left until kickoff, measured against server time (display only)
@@ -216,7 +227,8 @@
     function matchCard(match) {
         var state = stateOf(match);
         var $card = $('<article class="match-card">').addClass('match-card--' + state)
-            .attr('aria-label', match.homeTeam.name + ' gegen ' + match.awayTeam.name);
+            .attr('aria-label', match.homeTeam.name + ' gegen ' + match.awayTeam.name)
+            .data('match', match);
 
         $('<div class="match-card__top">')
             .append($('<span class="match-time">').text(formatTime(match.kickoff)))
@@ -269,6 +281,35 @@
         });
     }
 
+    // ---------- Sperre ab Anstoß bei offener Seite (US-21) ----------
+
+    // Alle 30 s: Countdown aktualisieren, offene Karten nach Anstoß sperren.
+    // Karten mit laufendem Speichern überspringen, dort entscheidet die Serverantwort.
+    function checkKickoffs() {
+        if (serverTime === null) {
+            return;
+        }
+        serverTime = serverNowIso();
+        var now = Date.parse(serverTime);
+        $('#matchday-list .match-card').each(function () {
+            var $card = $(this);
+            var match = $card.data('match');
+            var state = match ? stateOf(match) : null;
+            if (state !== 'open' && state !== 'tipped') {
+                return;
+            }
+            if ($card.find('button[type="submit"]').prop('disabled')) {
+                return;
+            }
+            if (Date.parse(match.kickoff) <= now) {
+                match.locked = true;
+                replaceCard($card, match, TIP_ERRORS.TIP_LOCKED, true);
+            } else {
+                $card.find('.match-card__top .badge').replaceWith(statusBadge(state, match));
+            }
+        });
+    }
+
     // ---------- Loading and navigation ----------
 
     // Matchday from ?matchday= (1 to 34), otherwise null = current matchday
@@ -308,6 +349,7 @@
             .then(function (data) {
                 currentMatchday = data.matchday;
                 serverTime = data.serverTime;
+                serverOffsetMs = Date.parse(data.serverTime) - Date.now();
                 renderMatchday(data);
                 writeMatchdayToUrl(data.matchday);
             })
@@ -342,5 +384,6 @@
         });
 
         loadMatchday(readMatchdayFromUrl());
+        window.setInterval(checkKickoffs, LOCK_CHECK_MS);
     });
 })(jQuery);
