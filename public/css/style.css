@@ -1480,3 +1480,16 @@ main {
 }
 .matchday-summary strong { font-family: var(--font-heading); font-size: var(--font-size-lg); }
 .matchday-summary__count { color: var(--color-text-muted); font-size: var(--font-size-sm); }
+
+/* ==========================================================
+   Sprint 3: Rangliste (US-25)
+   Nach Wireframes v2.0: Handy nur Platz, Name, Gesamt; Exakt ab 768 px (US-28, Kriterium 5).
+   ========================================================== */
+
+.ranking-table .col-wide { display: none; }
+.ranking-table .ranking-name { overflow-wrap: anywhere; }
+.ranking-empty { color: var(--color-text-muted); }
+
+@media (min-width: 768px) {
+    .ranking-table .col-wide { display: table-cell; }
+}
