@@ -15,7 +15,7 @@
     // key = value of data-group-tab on <body>; soon = shown but not clickable yet
     var TABS = [
         { key: 'matchday', label: 'Spieltag', path: 'html/matchday/Matchday.html' },
-        { key: 'ranking', label: 'Rangliste', path: null, soon: 'ab Sprint 3' },
+        { key: 'ranking', label: 'Rangliste', path: 'html/ranking/Ranking.html' },
         { key: 'group', label: 'Gruppe', path: 'html/groups/GroupInfo.html' }
     ];
 
