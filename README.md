@@ -21,10 +21,11 @@ Das Backend läuft auf einem Eco-Dyno und schläft nach 30 Minuten ohne Aufruf e
 | Registrieren | `public/html/auth/Register.html` | Neues Konto anlegen |
 | Abgemeldet | `public/html/auth/Logoff.html` | Bestätigung nach dem Abmelden |
 | Tippgruppen | `public/html/groups/Groups.html` | Eigene Tippgruppen mit Mitgliederzahl, Platz und Punkten |
-| Gruppe erstellen | `public/html/groups/CreateGroup.html` | Neue Tippgruppe anlegen, danach Einladungslink kopieren |
+| Gruppe erstellen | `public/html/groups/CreateGroup.html` | Neue Tippgruppe anlegen, danach Einladungslink teilen oder kopieren |
 | Gruppe beitreten | `public/html/groups/JoinGroup.html` | Vorschau per Einladungscode, Beitritt mit Anmeldung |
 | Gruppe | `public/html/groups/GroupInfo.html` | Mitgliederliste, Einladungslink nur für den Admin |
-| Spieltag | `public/html/matchday/Matchday.html` | Spiele einer Gruppe ansehen und tippen (`?groupId=…`) |
+| Spieltag | `public/html/matchday/Matchday.html` | Spiele einer Gruppe ansehen und tippen, Punkte je Spiel und Summe des Spieltags (`?groupId=…`) |
+| Rangliste | `public/html/ranking/Ranking.html` | Gesamtrangliste der Gruppe; auf dem Handy Platz, Name, Gesamt, ab 768 px zusätzlich exakte Tipps (`?groupId=…`) |
 | Impressum, Datenschutz | `public/html/legal/` | Rechtliche Seiten |
 | Entwicklung | `public/html/dev/ApiTest.html`, `StyleTest.html` | Ping-Test fürs Backend und Test der Styles |
 
