@@ -2,7 +2,7 @@
 
 <!-- Styleguide, abgeleitet aus den Design-Mockups „Tipprunde“ -->
 
-Verbindliche Gestaltungsgrundlage für alle Seiten von `tippseite-web`. Umsetzung in `public/css/style.css`, alle Komponenten zum Prüfen in `public/html/dev/StyleTest.html`.
+Verbindliche Gestaltungsgrundlage für alle Seiten von `tipprunde-web`. Umsetzung in `public/css/style.css`.
 
 **Grundsätze:** dunkles Navy, oranger Akzent, mobile first. Kein Bootstrap, keine externen Bibliotheken; Schriften liegen selbst gehostet in `public/fonts` (keine Anfragen an Google). Texte für Nutzer auf Deutsch, Klassen und Bezeichner auf Englisch.
 
