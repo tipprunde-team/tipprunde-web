@@ -5,6 +5,7 @@
  * The lock state comes only from the API field "locked" (server time), never from the device clock.
  * Bei offener Seite: Serverzeit aus serverTime plus vergangener Zeit schätzen und Karten ab Anstoß
  * sperren (US-21). Beim Speichern entscheidet weiterhin der Server.
+ * Punkte je Tipp als Badge und Summe des Spieltags aus myPoints (US-22); gerechnet wird im Backend.
  */
 (function ($) {
     'use strict';
@@ -220,7 +221,7 @@
             case 'finished':
             case 'locked':
                 return match.myTip ? 'Dein Tipp: ' + scoreText(match.myTip) : 'Kein Tipp abgegeben';
-            default: return 'Dein Tipp';
+            default: return match.myTip ? 'Dein Tipp' : 'Noch kein Tipp';
         }
     }
 
@@ -253,6 +254,28 @@
         return $card;
     }
 
+    // Summe der Punkte des Spieltags (US-22); nur gewertete Spiele, sonst ausgeblendet
+    function renderSummary(matches) {
+        var $summary = $('#md-summary');
+        if (!$summary.length) {
+            $summary = $('<p class="matchday-summary" id="md-summary" role="status">').insertBefore('#matchday-list');
+        }
+        var scored = matches.filter(function (match) {
+            return match.myPoints !== null && match.myPoints !== undefined;
+        });
+        if (!scored.length) {
+            $summary.empty().prop('hidden', true);
+            return;
+        }
+        var sum = scored.reduce(function (total, match) { return total + match.myPoints; }, 0);
+        $summary.empty()
+            .append(document.createTextNode('Deine Punkte an diesem Spieltag: '))
+            .append($('<strong>').text(sum))
+            .append($('<span class="matchday-summary__count">')
+                .text(scored.length + ' von ' + matches.length + ' Spielen gewertet'))
+            .prop('hidden', false);
+    }
+
     function renderMatchday(data) {
         var $list = $('#matchday-list').empty();
         $('#md-title').text(data.matchday + '. Spieltag');
@@ -260,6 +283,7 @@
         var matches = (data.matches || []).slice().sort(function (a, b) {
             return Date.parse(a.kickoff) - Date.parse(b.kickoff);
         });
+        renderSummary(matches);
         if (!matches.length) {
             $list.append($('<p class="matchday-empty">').text('Für diesen Spieltag sind noch keine Spiele angesetzt.'));
             return;

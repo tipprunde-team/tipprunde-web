@@ -73,6 +73,25 @@
         });
         $input.on('focus', function () { $(this).trigger('select'); });
 
+        // Teilen-Menü des Geräts (UC-02 Schritt 4, US-28); ohne Teilen-Menü nur Kopieren (4a)
+        var $share = null;
+        if (navigator.share) {
+            $share = $('<button type="button" class="btn btn-primary">').text('Teilen');
+            $copy.removeClass('btn-primary').addClass('btn-secondary');
+            $share.on('click', function () {
+                navigator.share({
+                    title: 'Tipprunde',
+                    text: 'Tritt meiner Tippgruppe „' + group.name + '“ bei:',
+                    url: link
+                }).catch(function (err) {
+                    // Abbrechen ist ok, andere Fehler: Link kopieren
+                    if (!err || err.name !== 'AbortError') {
+                        copyLink(link, $input, $copy, $status);
+                    }
+                });
+            });
+        }
+
         $('#created-card').empty()
             .append($('<h2 class="card-title">').text('Gruppe „' + group.name + '“ erstellt'))
             .append($('<p class="text-muted">').text('Schick deinen Mitspielern den Link oder den Code, damit sie beitreten können.'))
@@ -80,7 +99,7 @@
             .append($('<div class="invite-code">')
                 .append($('<span class="invite-code__value">').text(group.inviteCode)))
             .append($('<label class="label" for="invite-link">').text('Einladungslink'))
-            .append($('<div class="invite-link">').append($input, $copy))
+            .append($('<div class="invite-link">').append($input, $share, $copy))
             .append($status)
             .append($('<div class="actions">')
                 .append($('<a class="btn btn-secondary">').attr('href', matchdayUrl(group.id)).text('Zur Gruppe'))
