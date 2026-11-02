@@ -27,7 +27,6 @@ Das Backend läuft auf einem Eco-Dyno und schläft nach 30 Minuten ohne Aufruf e
 | Spieltag | `public/html/matchday/Matchday.html` | Spiele einer Gruppe ansehen und tippen, Punkte je Spiel und Summe des Spieltags (`?groupId=…`) |
 | Rangliste | `public/html/ranking/Ranking.html` | Gesamtrangliste der Gruppe; auf dem Handy Platz, Name, Gesamt, ab 768 px zusätzlich exakte Tipps (`?groupId=…`) |
 | Impressum, Datenschutz | `public/html/legal/` | Rechtliche Seiten |
-| Entwicklung | `public/html/dev/ApiTest.html`, `StyleTest.html` | Ping-Test fürs Backend und Test der Styles |
 
 `index.html` im Hauptordner leitet auf `public/Homepage.html` weiter.
 
