@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rangliste – Tipprunde</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" type="image/svg+xml" href="../../img/favicon.svg">
+</head>
+<body data-root="../../" data-nav="groups" data-group-tab="ranking">
+
+<header id="site-header"></header>
+
+<!-- Inhalt bleibt verborgen, bis requireLogin() die Sitzung bestätigt hat -->
+<main id="main" class="container ranking" style="display:none;">
+    <h1 class="sr-only">Rangliste</h1>
+
+    <!-- Reiter Spieltag / Rangliste / Gruppe, füllt group-nav.js (groupId aus ?groupId=) -->
+    <nav id="group-tabs" class="tabs" aria-label="Bereiche der Tippgruppe"></nav>
+
+    <div id="page-alert" class="alert" role="status" hidden></div>
+
+    <!-- Hinweis, solange der aktuelle Spieltag läuft; füllt ranking.js -->
+    <p class="ranking-note" id="ranking-note" hidden></p>
+
+    <!-- Handy: Platz, Name, Gesamt; Spalte Exakt ab 768 px (US-28, Kriterium 5) -->
+    <div class="card ranking-wrap" id="ranking-card">
+        <table class="ranking-table">
+            <caption class="sr-only">Gesamtrangliste</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Platz</th>
+                    <th scope="col">Name</th>
+                    <th scope="col" class="num col-wide"><abbr title="Exakte Tipps">Exakt</abbr></th>
+                    <th scope="col" class="num">Gesamt</th>
+                </tr>
+            </thead>
+            <!-- Zeilen füllt ranking.js -->
+            <tbody id="ranking-body"></tbody>
+        </table>
+    </div>
+</main>
+
+<footer id="site-footer"></footer>
+
+<!-- Reihenfolge nicht ändern -->
+<script src="../../js/jquery-3.6.0.min.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/layout.js"></script>
+<script src="../../js/auth-nav.js"></script>
+<script src="../../js/group-nav.js"></script>
+<script src="../../js/pages/ranking.js"></script>
+</body>
+</html>
