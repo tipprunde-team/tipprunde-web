@@ -1451,8 +1451,7 @@ main {
     .nav-menu-user { display: none; }
 }
 
-/* Sehr kleine Handys: Rangliste scrollt in ihrer Karte, nie die ganze Seite */
-.ranking-wrap { overflow-x: auto; }
+/* Sehr kleine Handys: engere Zellen in der Rangliste (Scrollen regelt .ranking-wrap oben) */
 @media (max-width: 359.98px) {
     .ranking-table th,
     .ranking-table td { padding-left: var(--space-1); padding-right: var(--space-1); font-size: var(--font-size-sm); }
