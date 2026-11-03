@@ -1,6 +1,7 @@
 /*
  * create-group.js: Tippgruppe erstellen (US-08)
  * POST /api/groups, danach Erfolgsansicht mit Einladungscode, Link und Kopieren-Button.
+ * KI-Log NS-03: mit Claude erstellt und an die API angebunden
  */
 (function ($) {
     'use strict';

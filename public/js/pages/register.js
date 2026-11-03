@@ -1,4 +1,5 @@
 // register.js - Registrierungsseite
+// KI-Log NS-01: Registrierung mit Eingabeprüfung und POST /api/users
 
 var EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 var USERNAME_PATTERN = /^[A-Za-z0-9_.-]{3,30}$/;
@@ -27,7 +28,7 @@ function validateRegister(email, username, password, password2) {
   return null;
 }
 
-// Rücksprung aus der URL, wird nur an den Login weitergereicht
+// KI-Log NS-03: Rücksprung aus der URL, wird nur an den Login weitergereicht
 // (logon.js prüft ihn mit getSafeRedirect, bevor er benutzt wird)
 function getRedirectParam() {
   return new URLSearchParams(window.location.search).get('redirect');

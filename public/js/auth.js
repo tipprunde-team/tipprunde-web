@@ -1,4 +1,4 @@
-
+// KI-Log NS-01: Sitzung im sessionStorage (Token, Ablauf, Nutzer)
 var SESSION_KEYS = {
   token: 'tippseite.token',
   expiresAt: 'tippseite.expiresAt',

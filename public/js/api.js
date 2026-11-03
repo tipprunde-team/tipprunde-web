@@ -1,4 +1,7 @@
-// Live URL of the core service (Heroku); the only place to change it
+// KI-Log NS-01: zentrale API-Schicht mit Bearer-Token, Ladeanzeige und Fehlerbehandlung
+
+// KI-Log NS-03: Backend-URL automatisch lokal oder live
+// Live-URL des Core-Service (Heroku), nur hier ändern
 var LIVE_API_BASE_URL = 'https://tipprunde-rest-b06734b76aad.herokuapp.com/api';
 var LOCAL_API_BASE_URL = 'http://localhost:8080/api';
 
@@ -14,9 +17,6 @@ var API_BASE_URL = isLocalEnvironment() ? LOCAL_API_BASE_URL : LIVE_API_BASE_URL
 // In der Konsole sieht man, welches Backend gerade benutzt wird
 console.info('[api] Environment: ' + (isLocalEnvironment() ? 'local' : 'live') +
   ', API base URL: ' + API_BASE_URL);
-if (API_BASE_URL.indexOf('TODO-') !== -1) {
-  console.warn('[api] Live API URL is still a placeholder. Set LIVE_API_BASE_URL in api.js.');
-}
 
 var API_LOADING_DELAY_MS = 800;
 var API_TIMEOUT_MS = 15000;

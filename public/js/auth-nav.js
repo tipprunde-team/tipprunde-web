@@ -1,4 +1,5 @@
 // auth-nav.js - Benutzername und Abmelden im Header (#nav-user)
+// KI-Log NS-01: Anzeige des angemeldeten Nutzers und Abmelden
 
 // Abmelden: Server informieren, Sitzung auf jeden Fall löschen
 function logout() {

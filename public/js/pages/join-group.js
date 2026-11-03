@@ -2,6 +2,7 @@
  * join-group.js: Tippgruppe per Einladungscode beitreten (US-09, UC-02)
  * Vorschau über GET /api/invites/{code} auch ohne Login,
  * Beitritt über POST /api/groups/join nur mit Login (Rücksprung inkl. Code).
+ * KI-Log NS-03: mit Claude erstellt und an die API angebunden
  */
 (function ($) {
     'use strict';

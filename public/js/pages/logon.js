@@ -1,4 +1,4 @@
-
+// KI-Log NS-01: Login mit Eingabeprüfung und sicherem Rücksprung
 var DEFAULT_TARGET = 'html/groups/Groups.html';
 var EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -49,7 +49,7 @@ $(function () {
     showSuccess('#page-alert', 'Konto angelegt, bitte anmelden.');
   }
 
-  // Rücksprung auch an den Link "Registrieren" weitergeben (z. B. von einer Einladung)
+  // KI-Log NS-03: Rücksprung auch an den Link "Registrieren" weitergeben (z. B. von einer Einladung)
   var target = getSafeRedirect();
   if (target !== null) {
     $('a[href="Register.html"]').attr('href', 'Register.html?redirect=' + encodeURIComponent(target));
