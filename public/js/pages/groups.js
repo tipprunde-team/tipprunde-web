@@ -1,3 +1,4 @@
+// KI-Log NS-23 "Gruppenübersicht und Erstellen anbinden."
 /*
  * groups.js: Übersicht der eigenen Tippgruppen (US-10)
  * Lädt GET /api/groups und zeigt pro Gruppe eine Karte, ohne Gruppen den Leerzustand.

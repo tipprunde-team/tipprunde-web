@@ -1,3 +1,4 @@
+// KI-Log NS-18 "Sitzung speichern, Testseite für die Endpunkte."
 
 var SESSION_KEYS = {
   token: 'tippseite.token',

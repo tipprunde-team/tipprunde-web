@@ -1,7 +1,9 @@
+// KI-Log NS-19 "Eingaben prüfen wie der Core, dann an die API senden."
 
 var DEFAULT_TARGET = 'html/groups/Groups.html';
 var EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// KI-Log NS-20 "Rücksprung nach dem Login nur auf eigene Seiten."
 // Erlaubt nur Pfade auf unserer eigenen Seite (kein "//host", kein "https://...").
 function getSafeRedirect() {
   var requested = new URLSearchParams(window.location.search).get('redirect');
@@ -49,6 +51,7 @@ $(function () {
     showSuccess('#page-alert', 'Konto angelegt, bitte anmelden.');
   }
 
+  // KI-Log NS-24 "Einladung darf beim Registrieren nicht verloren gehen."
   // Rücksprung auch an den Link "Registrieren" weitergeben (z. B. von einer Einladung)
   var target = getSafeRedirect();
   if (target !== null) {

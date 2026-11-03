@@ -1,3 +1,4 @@
+// KI-Log NS-19 "Eingaben prüfen wie der Core, dann an die API senden."
 // register.js - Registrierungsseite
 
 var EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -27,6 +28,7 @@ function validateRegister(email, username, password, password2) {
   return null;
 }
 
+// KI-Log NS-24 "Einladung darf beim Registrieren nicht verloren gehen."
 // Rücksprung aus der URL, wird nur an den Login weitergereicht
 // (logon.js prüft ihn mit getSafeRedirect, bevor er benutzt wird)
 function getRedirectParam() {
