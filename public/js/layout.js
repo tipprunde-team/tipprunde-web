@@ -1,3 +1,4 @@
+// KI-Log MG-07 "Header und Footer zentral bauen."
 /*
  * layout.js: gemeinsamer Header und Footer fuer alle Seiten
  * Nutzung auf jeder Seite:
@@ -39,6 +40,7 @@
         return $a;
     }
 
+    // KI-Log MG-49 "Mängel der mobilen Prüfung beheben."
     // Nur Handy (ab 768 px per CSS ausgeblendet): Benutzername und Abmelden im Menue,
     // damit der Header einzeilig bleibt. Abmelden nutzt den Button aus auth-nav.js.
     function renderMenuUser($nav) {

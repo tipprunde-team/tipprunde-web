@@ -73,6 +73,7 @@
         });
         $input.on('focus', function () { $(this).trigger('select'); });
 
+        // KI-Log MG-63 "Spieltag mobil und mit Punkten."
         // Teilen-Menü des Geräts (UC-02 Schritt 4, US-28); ohne Teilen-Menü nur Kopieren (4a)
         var $share = null;
         if (navigator.share) {

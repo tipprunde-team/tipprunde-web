@@ -1,3 +1,5 @@
+// KI-Log MG-25 "Mitglieder und Link nur für Admins."
+// KI-Log MG-29 "Beispieldaten durch API ersetzen."
 /*
  * group-info.js: group page with members and invite link (US-11, part of US-08)
  * Loads GET /api/groups/{groupId}; inviteCode is only included for admins.
@@ -66,6 +68,7 @@
         }
     }
 
+    // KI-Log MG-50 "Teilen mit Rückfall auf Kopieren."
     // Teilen-Menü des Geräts (CR-01); Abbrechen ist ok, andere Fehler: Link kopieren
     function shareInviteLink(group, link, $input, $copyButton, $status) {
         navigator.share({

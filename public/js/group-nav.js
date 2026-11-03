@@ -1,3 +1,4 @@
+// KI-Log MG-24 "Tabs Spieltag, Rangliste, Gruppe."
 /*
  * group-nav.js: tabs for all group pages (Matchday, Ranking, Group)
  * Usage on a page:

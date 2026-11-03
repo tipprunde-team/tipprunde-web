@@ -1,3 +1,4 @@
+// KI-Log MG-64 "Rangliste nach API-Design."
 /*
  * ranking.js: Gesamtrangliste einer Tippgruppe (US-25), Handy-Ansicht nach US-28
  * Lädt GET /api/groups/{groupId}/ranking.

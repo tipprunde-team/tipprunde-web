@@ -1,9 +1,11 @@
+/* KI-Log MG-04 "Styleguide und Stylesheet erstellen." */
 /* ==========================================================================
    Tipprunde – zentrales Stylesheet
    Grundlage: docs/styleguide.md.
    Mobile first, Breakpoint ab 768 px. No external libraries, fonts are self-hosted.
    ========================================================================== */
 
+/* KI-Log MG-38 "Seiten für Live-Betrieb fertig machen." */
 /* Self-hosted fonts (public/fonts, SIL Open Font License, latin subset incl. umlauts).
    No requests to Google: visitor IP addresses are not sent to third parties. */
 @font-face {
@@ -538,6 +540,7 @@ main {
     }
 }
 
+/* KI-Log MG-07 "Header und Footer zentral bauen." */
 /* ==========================================================
    Layout, Startseite, Rechtliches
    ========================================================== */
@@ -840,6 +843,7 @@ main {
 }
 
 
+/* KI-Log MG-09 "Statische Seiten mit Beispieldaten." */
 /* ==========================================================
    Spieltagsseite
    Baut auf .match-card von der Startseite auf. Mobile first.
@@ -1007,6 +1011,7 @@ main {
     .team-name { font-size: var(--font-size-base); }
 }
 
+/* KI-Log MG-09 "Statische Seiten mit Beispieldaten." */
 /* ==========================================================
    Gruppen und Rangliste
    Mobile first, ab 768 px Desktop.
@@ -1219,6 +1224,7 @@ main {
     .ranking-table th,
     .ranking-table td { padding: var(--space-3) var(--space-4); }
 }
+/* KI-Log MG-26 "Fehlende CSS-Klassen ergänzen." */
 /* ==========================================================
    Group page and group tabs
    New classes for group-nav.js and GroupInfo.html. Mobile first, checked at 375 px.
@@ -1354,6 +1360,7 @@ main {
 }
 
 
+/* KI-Log MG-49 "Mängel der mobilen Prüfung beheben." */
 /* ==========================================================
    Mobiler Feinschliff (CR-01, US-28)
    Ergebnis des Checks bei 360/320 px: Header einzeilig,
@@ -1426,12 +1433,14 @@ main {
     .nav-menu-user { display: none; }
 }
 
+/* KI-Log MG-64 "Rangliste nach API-Design." */
 /* Sehr kleine Handys: engere Zellen in der Rangliste (Scrollen regelt .ranking-wrap oben) */
 @media (max-width: 359.98px) {
     .ranking-table th,
     .ranking-table td { padding-left: var(--space-1); padding-right: var(--space-1); font-size: var(--font-size-sm); }
 }
 
+/* KI-Log MG-63 "Spieltag mobil und mit Punkten." */
 /* ==========================================================
    Sprint 3: Rest von US-28 und Punkte im Spieltag (US-22)
    ========================================================== */
@@ -1455,6 +1464,7 @@ main {
 .matchday-summary strong { font-family: var(--font-heading); font-size: var(--font-size-lg); }
 .matchday-summary__count { color: var(--color-text-muted); font-size: var(--font-size-sm); }
 
+/* KI-Log MG-64 "Rangliste nach API-Design." */
 /* ==========================================================
    Sprint 3: Rangliste (US-25)
    Nach Wireframes v2.0: Handy nur Platz, Name, Gesamt; Exakt ab 768 px (US-28, Kriterium 5).

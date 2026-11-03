@@ -1,3 +1,5 @@
+// KI-Log MG-09 "Statische Seiten mit Beispieldaten."
+// KI-Log MG-28 "Spieltag an …/matches und …/tip anbinden."
 /*
  * matchday.js: matchday page of a group (US-17, US-20, US-21)
  * Loads GET /api/groups/{groupId}/matches[?matchday=n] and saves tips via
@@ -56,6 +58,7 @@
         return score ? score.home + ' : ' + score.away : '– : –';
     }
 
+    // KI-Log MG-51 "Spieltag gegen US-21 prüfen."
     // Geschätzte Serverzeit: letzte serverTime der API plus seitdem vergangene Zeit.
     // Geräteuhr misst nur die Dauer, eine falsch gestellte Uhr spielt keine Rolle.
     function serverNowIso() {
@@ -254,6 +257,7 @@
         return $card;
     }
 
+    // KI-Log MG-63 "Spieltag mobil und mit Punkten."
     // Summe der Punkte des Spieltags (US-22); nur gewertete Spiele, sonst ausgeblendet
     function renderSummary(matches) {
         var $summary = $('#md-summary');
@@ -305,6 +309,7 @@
         });
     }
 
+    // KI-Log MG-51 "Spieltag gegen US-21 prüfen."
     // ---------- Sperre ab Anstoß bei offener Seite (US-21) ----------
 
     // Alle 30 s: Countdown aktualisieren, offene Karten nach Anstoß sperren.
