@@ -737,6 +737,7 @@ main {
     .steps li { grid-template-columns: 1fr; }
 }
 
+/* KI-Log MG-78 "Menü-Button unter 768 px nachrüsten." */
 /* ==========================================================
    Menü-Button und mobile Navigation
    Mobile first: Basis = Handy, ab 768 px Desktop.

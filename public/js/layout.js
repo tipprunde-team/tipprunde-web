@@ -83,6 +83,7 @@
         // Platzhalter: fuellt Niklas mit auth-nav.js (Benutzername, Abmelden)
         $container.append('<div id="nav-user"></div>');
 
+        // KI-Log MG-78 "Menü-Button unter 768 px nachrüsten."
         // Menue-Button fuer kleine Bildschirme, steht hinter #nav-user
         var $toggle = $('<button type="button" class="nav-toggle">')
             .attr({ 'aria-controls': 'main-nav', 'aria-expanded': 'false' })
@@ -93,6 +94,7 @@
         $header.addClass('site-header').empty().append($container);
     }
 
+    // KI-Log MG-78 "Menü-Button unter 768 px nachrüsten."
     // Menue auf- und zuklappen
     function setMenuOpen(open) {
         $('#main-nav').toggleClass('is-open', open);
