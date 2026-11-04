@@ -1,3 +1,4 @@
+// KI-Log NS-20 "Rücksprung nach dem Login nur auf eigene Seiten."
 // auth-nav.js - Benutzername und Abmelden im Header (#nav-user)
 
 // Abmelden: Server informieren, Sitzung auf jeden Fall löschen

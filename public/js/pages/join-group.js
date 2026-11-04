@@ -1,3 +1,4 @@
+// KI-Log NS-24 "Einladung darf beim Registrieren nicht verloren gehen."
 /*
  * join-group.js: Tippgruppe per Einladungscode beitreten (US-09, UC-02)
  * Vorschau über GET /api/invites/{code} auch ohne Login,

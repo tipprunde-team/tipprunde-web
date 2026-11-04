@@ -1,3 +1,4 @@
+// KI-Log NS-22 "Dieselbe MPA lokal und auf GitHub Pages betreiben."
 // Live URL of the core service (Heroku); the only place to change it
 var LIVE_API_BASE_URL = 'https://tipprunde-rest-b06734b76aad.herokuapp.com/api';
 var LOCAL_API_BASE_URL = 'http://localhost:8080/api';
@@ -18,6 +19,7 @@ if (API_BASE_URL.indexOf('TODO-') !== -1) {
   console.warn('[api] Live API URL is still a placeholder. Set LIVE_API_BASE_URL in api.js.');
 }
 
+// KI-Log NS-17 "Alle Backend-Aufrufe zentral mit Token und Fehlerbehandlung."
 var API_LOADING_DELAY_MS = 800;
 var API_TIMEOUT_MS = 15000;
 

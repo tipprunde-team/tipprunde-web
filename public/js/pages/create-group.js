@@ -1,3 +1,4 @@
+// KI-Log NS-23 "Gruppenübersicht und Erstellen anbinden."
 /*
  * create-group.js: Tippgruppe erstellen (US-08)
  * POST /api/groups, danach Erfolgsansicht mit Einladungscode, Link und Kopieren-Button.
